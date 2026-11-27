@@ -72,6 +72,15 @@ The post-v1 token work followed the same order:
 
 The mutation audit now covers 11 phases (`docs/TDD.md`, `docs/tdd-audit.json`).
 
+## Extension: thin MCP server
+
+| Commit | Contents | Verification |
+|---|---|---|
+| `90a3b59` | MCP client and tool tests, workspace manifest and SDK dependency | red at that commit: `mcp/src` is absent, so the suites cannot resolve it |
+| `96947f6` | client, six tools, server factory, stdio entrypoint, smoke script, docs | 251 Vitest tests, 4 Playwright flows, 12-phase audit, live stdio round-trip |
+
+The audit now covers 12 phases; `10-mcp-bearer` fails if the MCP client stops sending the personal token.
+
 ## Limits
 
 Order in a recorded history is not proof of the order in a deleted one. What the
