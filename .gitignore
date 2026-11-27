@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.data/
+.e2e-data/
+coverage/
+test-results/
+playwright-report/
+*.log
+!docs/tdd-logs/
+!docs/tdd-logs/*.log
+!docs/tdd-history/
+!docs/tdd-history/*.log
+.commandcode/
+.DS_Store
