@@ -1,0 +1,38 @@
+$ npm run audit:tdd
+
+> herrku@0.1.0 audit:tdd
+> node scripts/tdd-audit.mjs
+
+
+=== 00-tests-before-implementation: Shared test suites exist and fail with no implementation at all
+    red exit=1 failed=6 | green exit=0 -> OK
+
+=== 01-shared-parser: Shared: ingredient parser (leading whitespace handling)
+    red exit=1 failed=6 | green exit=0 -> OK
+
+=== 02-shared-merge-notes: Shared: shopping merge note de-duplication
+    red exit=1 failed=2 | green exit=0 -> OK
+
+=== 03-m0-migrations: M0: migrations run once per database
+    red exit=1 failed=2 | green exit=0 -> OK
+
+=== 04-m1-auth: M1: login rejects wrong passwords
+    red exit=1 failed=4 | green exit=0 -> OK
+
+=== 05-m2-search: M2: search ignores one-character queries
+    red exit=1 failed=2 | green exit=0 -> OK
+
+=== 06-m3-image-permissions: M3: only the creator or admin may upload an image
+    red exit=1 failed=2 | green exit=0 -> OK
+
+=== 07-m4-scaling: M4: shopping list scales by requested servings
+    red exit=1 failed=2 | green exit=0 -> OK
+
+=== 08-m5-last-admin: M5: the last active admin cannot be removed
+    red exit=1 failed=2 | green exit=0 -> OK
+
+=== 09-ui-clipboard: UI: the copy button actually writes to the clipboard
+    red exit=1 failed=1 | green exit=0 -> OK
+
+10/10 phases red->green
+EXIT=0

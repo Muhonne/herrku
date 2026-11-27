@@ -1,0 +1,26 @@
+
+> herrku@0.1.0 build
+> npm -w @herrku/shared run build && npm -w @herrku/server run build && npm -w @herrku/web run build
+
+
+> @herrku/shared@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @herrku/server@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @herrku/web@0.1.0 build
+> vite build
+
+vite v7.3.8 building client environment for production...
+transforming...
+✓ 117 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.39 kB │ gzip:   0.26 kB
+dist/assets/index-_dwiDj7U.css   22.54 kB │ gzip:   5.13 kB
+dist/assets/index-BFog1JCb.js   404.65 kB │ gzip: 121.17 kB
+✓ built in 759ms
+

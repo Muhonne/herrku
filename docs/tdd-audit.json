@@ -1,0 +1,215 @@
+{
+  "generatedAt": "2026-11-27T15:25:17.287Z",
+  "node": "v26.13.0",
+  "results": [
+    {
+      "id": "00-tests-before-implementation",
+      "title": "Shared test suites exist and fail with no implementation at all",
+      "mutation": "Move shared/src away entirely",
+      "file": "shared/src",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "FAIL  shared/test/format.test.ts [ shared/test/format.test.ts ]",
+          "FAIL  shared/test/merge.test.ts [ shared/test/merge.test.ts ]",
+          "FAIL  shared/test/parser.test.ts [ shared/test/parser.test.ts ]",
+          "FAIL  shared/test/search-text.test.ts [ shared/test/search-text.test.ts ]",
+          "FAIL  shared/test/slug.test.ts [ shared/test/slug.test.ts ]",
+          "FAIL  shared/test/units.test.ts [ shared/test/units.test.ts ]"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "01-shared-parser",
+      "title": "Shared: ingredient parser (leading whitespace handling)",
+      "mutation": "Stop trimming whitespace before unit matching",
+      "file": "shared/src/parser.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× parseIngredient > parses \"1 1/2 cups flour\"",
+          "× parseIngredient > parses \"½ tsp salt\"",
+          "× parseIngredient > parses \"1/2 cup milk\"",
+          "× parseIngredient > parses \"1½ tbsp sugar\"",
+          "FAIL  shared/test/parser.test.ts > parseIngredient > parses \"1 1/2 cups flour\"",
+          "FAIL  shared/test/parser.test.ts > parseIngredient > parses \"1½ tbsp sugar\""
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "02-shared-merge-notes",
+      "title": "Shared: shopping merge note de-duplication",
+      "mutation": "Accept duplicate notes",
+      "file": "shared/src/merge.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× mergeShoppingList > dedupes notes case-insensitively and keeps the first spelling",
+          "FAIL  shared/test/merge.test.ts > mergeShoppingList > dedupes notes case-insensitively and keeps the first spelling"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "03-m0-migrations",
+      "title": "M0: migrations run once per database",
+      "mutation": "Re-apply already-applied migrations",
+      "file": "server/src/db/migrate.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× migrations > is idempotent across boots on the same data dir",
+          "FAIL  server/test/health.test.ts > migrations > is idempotent across boots on the same data dir"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "04-m1-auth",
+      "title": "M1: login rejects wrong passwords",
+      "mutation": "Skip password verification failure",
+      "file": "server/src/routes/auth.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× login > returns the same generic error for a wrong password and an unknown user",
+          "× rate limiting > returns 429 with Retry-After after too many login attempts",
+          "FAIL  server/test/auth.test.ts > login > returns the same generic error for a wrong password and an unknown user",
+          "FAIL  server/test/auth.test.ts > rate limiting > returns 429 with Retry-After after too many login attempts"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "05-m2-search",
+      "title": "M2: search ignores one-character queries",
+      "mutation": "Filter on single-character queries",
+      "file": "server/src/routes/recipes.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× search > ignores queries shorter than two characters",
+          "FAIL  server/test/recipes.test.ts > search > ignores queries shorter than two characters"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "06-m3-image-permissions",
+      "title": "M3: only the creator or admin may upload an image",
+      "mutation": "Remove the upload permission check",
+      "file": "server/src/routes/images.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× image upload > forbids a non-owner member from uploading",
+          "FAIL  server/test/images.test.ts > image upload > forbids a non-owner member from uploading"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "07-m4-scaling",
+      "title": "M4: shopping list scales by requested servings",
+      "mutation": "Ignore the servings multiplier",
+      "file": "shared/src/merge.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× POST /api/shopping-list > merges, scales and renders a plain-text list",
+          "FAIL  server/test/shopping.test.ts > POST /api/shopping-list > merges, scales and renders a plain-text list"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "08-m5-last-admin",
+      "title": "M5: the last active admin cannot be removed",
+      "mutation": "Disable the last-admin guard",
+      "file": "server/src/routes/admin.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× disabled accounts > refuses to disable the last admin",
+          "FAIL  server/test/auth.test.ts > disabled accounts > refuses to disable the last admin"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "09-ui-clipboard",
+      "title": "UI: the copy button actually writes to the clipboard",
+      "mutation": "Report success without writing to the clipboard",
+      "file": "web/src/lib/clipboard.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (590ms)"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    }
+  ]
+}

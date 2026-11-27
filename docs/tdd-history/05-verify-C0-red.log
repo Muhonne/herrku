@@ -1,0 +1,133 @@
+$ NODE_ENV=test npx vitest run   # at C0
+
+ RUN  v3.2.7 /tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 11 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  server/test/auth.test.ts [ server/test/auth.test.ts ]
+ FAIL  server/test/images.test.ts [ server/test/images.test.ts ]
+ FAIL  server/test/recipes.test.ts [ server/test/recipes.test.ts ]
+ FAIL  server/test/shopping.test.ts [ server/test/shopping.test.ts ]
+Error: Cannot find module '../src/app.js' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/server/test/helpers.ts'
+ ❯ server/test/helpers.ts:5:1
+      3| import { join } from 'node:path'
+      4| import type { FastifyInstance } from 'fastify'
+      5| import { buildApp } from '../src/app.js'
+       | ^
+      6| import { loadConfig, type Config } from '../src/config.js'
+      7| 
+
+Caused by: Error: Failed to load url ../src/app.js (resolved id: ../src/app.js) in /tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/server/test/health.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../../../../../home/mattias/hobby/herrku/node_modules/vite/dist/node/chunks/config.js:22907:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  server/test/health.test.ts [ server/test/health.test.ts ]
+Error: Cannot find module '../src/app.js' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/server/test/health.test.ts'
+ ❯ server/test/health.test.ts:5:1
+      3| import { join } from 'node:path'
+      4| import { afterEach, describe, expect, it } from 'vitest'
+      5| import { buildApp } from '../src/app.js'
+       | ^
+      6| import { createTestApp, type TestApp } from './helpers.js'
+      7| 
+
+Caused by: Error: Failed to load url ../src/app.js (resolved id: ../src/app.js) in /tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/server/test/health.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../../../../../home/mattias/hobby/herrku/node_modules/vite/dist/node/chunks/config.js:22907:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  shared/test/format.test.ts [ shared/test/format.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/shared/test/format.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/format.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { formatLine, formatQuantity, unitLabel } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('formatQuantity', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  shared/test/merge.test.ts [ shared/test/merge.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/shared/test/merge.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/merge.test.ts:3:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import type { IngredientLine, MergeSelection } from '@herrku/shared'
+      3| import { mergeShoppingList, renderShoppingList } from '@herrku/shared'
+       | ^
+      4| 
+      5| const ing = (over: Partial<IngredientLine> = {}): IngredientLine => ({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  shared/test/parser.test.ts [ shared/test/parser.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/shared/test/parser.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/parser.test.ts:3:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import type { ParsedIngredient } from '@herrku/shared'
+      3| import { parseIngredient } from '@herrku/shared'
+       | ^
+      4| 
+      5| type Case = [input: string, expected: ParsedIngredient]
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  shared/test/search-text.test.ts [ shared/test/search-text.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/shared/test/search-text.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/search-text.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { buildSearchText } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('buildSearchText', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  shared/test/slug.test.ts [ shared/test/slug.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/shared/test/slug.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/slug.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { slugify } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('slugify', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  shared/test/units.test.ts [ shared/test/units.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c0/shared/test/units.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/units.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { UNIT_TOKENS, matchUnit, unitLabel } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('UNIT_TOKENS', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+
+ Test Files  11 failed (11)
+      Tests  no tests
+   Start at  17:24:35
+   Duration  285ms (transform 473ms, setup 0ms, collect 0ms, tests 0ms, environment 2ms, prepare 674ms)
+
+EXIT=1

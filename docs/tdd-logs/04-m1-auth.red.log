@@ -1,0 +1,82 @@
+
+ RUN  v3.2.7 /home/mattias/hobby/herrku
+
+ ❯ server/test/auth.test.ts (28 tests | 2 failed) 605ms
+   ✓ bootstrap > creates the first admin from env vars 65ms
+   ✓ bootstrap > does not create a second admin on the next boot 18ms
+   ✓ login > signs in with valid credentials 27ms
+   × login > returns the same generic error for a wrong password and an unknown user 31ms
+     → expected 200 to be 401 // Object.is equality
+   ✓ login > sets HttpOnly, SameSite=Lax and Path=/ on the cookie 16ms
+   ✓ login > uses the __Host- prefixed cookie name when secure 16ms
+   ✓ login > honours staySignedIn by toggling cookie persistence 23ms
+   ✓ me and logout > requires a session 11ms
+   ✓ me and logout > returns the current user 16ms
+   ✓ me and logout > invalidates the session on logout 16ms
+   ✓ me and logout > refreshes a stale session on use 15ms
+   ✓ me and logout > lists and revokes sessions 21ms
+   ✓ invites > runs the full invite flow 27ms
+   ✓ invites > rejects a used invite 20ms
+   ✓ invites > rejects an expired invite 18ms
+   ✓ invites > rejects an unknown invite token 11ms
+   ✓ invites > rejects a taken username with 409 23ms
+   ✓ invites > honours the requested role 22ms
+   ✓ password change and reset > revokes other sessions but keeps the current one 32ms
+   ✓ password change and reset > rejects a wrong current password 21ms
+   ✓ password change and reset > issues a reset link that sets a new password and revokes sessions 37ms
+   ✓ csrf > rejects a mutating request without an origin 9ms
+   ✓ csrf > rejects a foreign origin 9ms
+   ✓ csrf > accepts a referer fallback when origin is absent 14ms
+   × rate limiting > returns 429 with Retry-After after too many login attempts 16ms
+     → expected 200 to be 401 // Object.is equality
+   ✓ disabled accounts > rejects live sessions once the user is disabled 26ms
+   ✓ disabled accounts > refuses to disable the last admin 16ms
+   ✓ disabled accounts > promotes a member to admin with immediate effect 28ms
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 26 passed (28)
+   Start at  17:24:56
+   Duration  966ms (transform 81ms, setup 0ms, collect 218ms, tests 605ms, environment 0ms, prepare 31ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  server/test/auth.test.ts > login > returns the same generic error for a wrong password and an unknown user
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ server/test/auth.test.ts:94:30
+     92|     })
+     93| 
+     94|     expect(wrong.statusCode).toBe(401)
+       |                              ^
+     95|     expect(unknown.statusCode).toBe(401)
+     96|     expect(wrong.json()).toEqual(unknown.json())
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  server/test/auth.test.ts > rate limiting > returns 429 with Retry-After after too many login attempts
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ server/test/auth.test.ts:509:42
+    507|       })
+    508| 
+    509|     expect((await attempt()).statusCode).toBe(401)
+       |                                          ^
+    510|     expect((await attempt()).statusCode).toBe(401)
+    511|     const limited = await attempt()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+

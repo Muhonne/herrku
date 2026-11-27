@@ -1,0 +1,99 @@
+
+ RUN  v3.2.7 /home/mattias/hobby/herrku
+
+
+ Test Files  6 failed (6)
+      Tests  no tests
+   Start at  17:24:51
+   Duration  193ms (transform 115ms, setup 0ms, collect 0ms, tests 0ms, environment 1ms, prepare 256ms)
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  shared/test/format.test.ts [ shared/test/format.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/home/mattias/hobby/herrku/shared/test/format.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/format.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { formatLine, formatQuantity, unitLabel } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('formatQuantity', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  shared/test/merge.test.ts [ shared/test/merge.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/home/mattias/hobby/herrku/shared/test/merge.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/merge.test.ts:3:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import type { IngredientLine, MergeSelection } from '@herrku/shared'
+      3| import { mergeShoppingList, renderShoppingList } from '@herrku/shared'
+       | ^
+      4| 
+      5| const ing = (over: Partial<IngredientLine> = {}): IngredientLine => ({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  shared/test/parser.test.ts [ shared/test/parser.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/home/mattias/hobby/herrku/shared/test/parser.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/parser.test.ts:3:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import type { ParsedIngredient } from '@herrku/shared'
+      3| import { parseIngredient } from '@herrku/shared'
+       | ^
+      4| 
+      5| type Case = [input: string, expected: ParsedIngredient]
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  shared/test/search-text.test.ts [ shared/test/search-text.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/home/mattias/hobby/herrku/shared/test/search-text.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/search-text.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { buildSearchText } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('buildSearchText', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  shared/test/slug.test.ts [ shared/test/slug.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/home/mattias/hobby/herrku/shared/test/slug.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/slug.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { slugify } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('slugify', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  shared/test/units.test.ts [ shared/test/units.test.ts ]
+Error: Cannot find module '@herrku/shared' imported from '/home/mattias/hobby/herrku/shared/test/units.test.ts'.
+
+- If you rely on tsconfig.json's "paths" to resolve modules, please install "vite-tsconfig-paths" plugin to handle module resolution.
+- Make sure you don't have relative aliases in your Vitest config. Use absolute paths instead. Read more: https://vitest.dev/guide/common-errors
+ ❯ shared/test/units.test.ts:2:1
+      1| import { describe, expect, it } from 'vitest'
+      2| import { UNIT_TOKENS, matchUnit, unitLabel } from '@herrku/shared'
+       | ^
+      3| 
+      4| describe('UNIT_TOKENS', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+

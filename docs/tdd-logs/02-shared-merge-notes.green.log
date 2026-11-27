@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /home/mattias/hobby/herrku
+
+ ✓ shared/test/merge.test.ts (14 tests) 7ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  17:24:54
+   Duration  190ms (transform 37ms, setup 0ms, collect 43ms, tests 7ms, environment 0ms, prepare 33ms)
+
+

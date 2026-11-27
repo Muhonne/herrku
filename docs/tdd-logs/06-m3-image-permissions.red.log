@@ -1,0 +1,44 @@
+
+ RUN  v3.2.7 /home/mattias/hobby/herrku
+
+ ❯ server/test/images.test.ts (10 tests | 1 failed) 316ms
+   ✓ image upload > stores a full image and a thumbnail and returns urls 92ms
+   ✓ image upload > serves the image through the api with private caching 28ms
+   ✓ image upload > lets any signed-in user read an image but requires a session 38ms
+   ✓ image upload > marks hasImage and thumbUrl on the list 23ms
+   × image upload > forbids a non-owner member from uploading 35ms
+     → expected 200 to be 403 // Object.is equality
+   ✓ image upload > rejects non-image bytes with 415 18ms
+   ✓ image upload > rejects files over the configured limit with 413 19ms
+   ✓ image upload > replaces the previous files on re-upload 25ms
+   ✓ image upload > deletes image files when the recipe is deleted 20ms
+   ✓ image upload > returns 404 when a recipe has no image 17ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)
+   Start at  17:25:01
+   Duration  683ms (transform 76ms, setup 0ms, collect 220ms, tests 316ms, environment 0ms, prepare 35ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  server/test/images.test.ts > image upload > forbids a non-owner member from uploading
+AssertionError: expected 200 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 200
+
+ ❯ server/test/images.test.ts:160:33
+    158|     const response = await upload(testApp.app, member, recipe.slug, aw…
+    159| 
+    160|     expect(response.statusCode).toBe(403)
+       |                                 ^
+    161|   })
+    162| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+

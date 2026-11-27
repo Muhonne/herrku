@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /home/mattias/hobby/herrku
+
+ ✓ server/test/auth.test.ts (28 tests) 586ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  17:25:06
+   Duration  948ms (transform 82ms, setup 0ms, collect 221ms, tests 586ms, environment 0ms, prepare 33ms)
+
+

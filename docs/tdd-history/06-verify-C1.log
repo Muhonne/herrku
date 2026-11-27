@@ -1,0 +1,65 @@
+$ npx vitest run shared   # at C1
+
+ RUN  v3.2.7 /tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c1
+
+ ✓ shared/test/search-text.test.ts (4 tests) 2ms
+ ✓ shared/test/format.test.ts (26 tests) 3ms
+ ✓ shared/test/slug.test.ts (11 tests) 2ms
+ ✓ shared/test/parser.test.ts (25 tests) 5ms
+ ✓ shared/test/units.test.ts (71 tests) 5ms
+ ✓ shared/test/merge.test.ts (14 tests) 8ms
+
+ Test Files  6 passed (6)
+      Tests  151 passed (151)
+   Start at  17:24:36
+   Duration  217ms (transform 169ms, setup 0ms, collect 356ms, tests 26ms, environment 1ms, prepare 227ms)
+
+EXIT=0
+
+$ npx vitest run server   # at C1 (still red, as expected)
+
+ RUN  v3.2.7 /tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c1
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  server/test/auth.test.ts [ server/test/auth.test.ts ]
+ FAIL  server/test/images.test.ts [ server/test/images.test.ts ]
+ FAIL  server/test/recipes.test.ts [ server/test/recipes.test.ts ]
+ FAIL  server/test/shopping.test.ts [ server/test/shopping.test.ts ]
+Error: Cannot find module '../src/app.js' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c1/server/test/helpers.ts'
+ ❯ server/test/helpers.ts:5:1
+      3| import { join } from 'node:path'
+      4| import type { FastifyInstance } from 'fastify'
+      5| import { buildApp } from '../src/app.js'
+       | ^
+      6| import { loadConfig, type Config } from '../src/config.js'
+      7| 
+
+Caused by: Error: Failed to load url ../src/app.js (resolved id: ../src/app.js) in /tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c1/server/test/health.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../../../../../home/mattias/hobby/herrku/node_modules/vite/dist/node/chunks/config.js:22907:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  server/test/health.test.ts [ server/test/health.test.ts ]
+Error: Cannot find module '../src/app.js' imported from '/tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c1/server/test/health.test.ts'
+ ❯ server/test/health.test.ts:5:1
+      3| import { join } from 'node:path'
+      4| import { afterEach, describe, expect, it } from 'vitest'
+      5| import { buildApp } from '../src/app.js'
+       | ^
+      6| import { createTestApp, type TestApp } from './helpers.js'
+      7| 
+
+Caused by: Error: Failed to load url ../src/app.js (resolved id: ../src/app.js) in /tmp/commandcode-1000/-home-mattias-hobby-herrku/0046a3a6-0c82-42f5-8bea-a3b85f8f8397/scratchpad/wt-c1/server/test/health.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../../../../../home/mattias/hobby/herrku/node_modules/vite/dist/node/chunks/config.js:22907:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  no tests
+   Start at  17:24:36
+   Duration  204ms (transform 148ms, setup 0ms, collect 0ms, tests 0ms, environment 0ms, prepare 176ms)
+
+EXIT=1
