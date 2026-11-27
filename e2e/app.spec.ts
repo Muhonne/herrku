@@ -98,3 +98,39 @@ test('falls back to manual copy when the clipboard api is unavailable', async ({
     'Copy failed — select the text and copy manually',
   )
 })
+
+test('creates a personal API token in the UI and uses it with bearer auth', async ({
+  page,
+  request,
+}) => {
+  await signIn(page, 'admin', 'admin-password-123')
+  await page.getByRole('link', { name: 'Account' }).click()
+
+  await page.getByLabel('Token name').fill('e2e-agent')
+  await page.getByRole('button', { name: 'Create token' }).click()
+
+  const secret = await page.getByLabel('New API token').inputValue()
+  expect(secret).toMatch(/^hk_/)
+
+  const tokenRow = page.getByRole('listitem').filter({ hasText: 'e2e-agent' })
+
+  const listed = await request.get('/api/recipes', {
+    headers: { authorization: `Bearer ${secret}` },
+  })
+  expect(listed.status()).toBe(200)
+
+  const created = await request.post('/api/recipes', {
+    headers: { authorization: `Bearer ${secret}` },
+    data: { title: 'Agent Recipe', ingredients: [], steps: [{ text: 'Serve.' }] },
+  })
+  expect(created.status()).toBe(201)
+
+  await tokenRow.getByRole('button', { name: 'Revoke' }).click()
+  await tokenRow.getByRole('button', { name: 'Revoke', exact: true }).click()
+  await expect(page.getByText('No API tokens yet.')).toBeVisible()
+
+  const afterRevoke = await request.get('/api/recipes', {
+    headers: { authorization: `Bearer ${secret}` },
+  })
+  expect(afterRevoke.status()).toBe(401)
+})

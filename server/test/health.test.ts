@@ -55,6 +55,7 @@ describe('migrations', () => {
         'ingredients',
         'steps',
         'recipe_tags',
+        'api_tokens',
         'schema_migrations',
       ]),
     )
