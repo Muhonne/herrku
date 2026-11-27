@@ -1,0 +1,39 @@
+
+ RUN  v3.2.7 /home/mattias/hobby/herrku
+
+ ❯ mcp/test/client.test.ts (7 tests | 1 failed) 13ms
+   × HerrkuClient > sends a bearer token and builds search query parameters 10ms
+     → expected 'Bearer wrong-token' to be 'Bearer hk_test_token' // Object.is equality
+   ✓ HerrkuClient > normalizes a trailing slash on the base url 0ms
+   ✓ HerrkuClient > encodes recipe slugs in the path 0ms
+   ✓ HerrkuClient > sends recipe bodies as JSON on create and update 1ms
+   ✓ HerrkuClient > posts shopping list selections 0ms
+   ✓ HerrkuClient > maps API errors to HerrkuError 1ms
+   ✓ HerrkuClient > falls back to a generic message for non-JSON errors 0ms
+ ✓ mcp/test/tools.test.ts (6 tests) 36ms
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 12 passed (13)
+   Start at  19:18:59
+   Duration  512ms (transform 91ms, setup 0ms, collect 220ms, tests 49ms, environment 0ms, prepare 115ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  mcp/test/client.test.ts > HerrkuClient > sends a bearer token and builds search query parameters
+AssertionError: expected 'Bearer wrong-token' to be 'Bearer hk_test_token' // Object.is equality
+
+Expected: "Bearer hk_test_token"
+Received: "Bearer wrong-token"
+
+ ❯ mcp/test/client.test.ts:56:42
+     54| 
+     55|     const headers = new Headers(calls[0]?.init.headers)
+     56|     expect(headers.get('authorization')).toBe('Bearer hk_test_token')
+       |                                          ^
+     57|     expect(headers.get('accept')).toBe('application/json')
+     58|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+

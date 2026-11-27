@@ -4,8 +4,8 @@
 
  Test Files  6 failed (6)
       Tests  no tests
-   Start at  19:10:31
-   Duration  395ms (transform 160ms, setup 0ms, collect 0ms, tests 0ms, environment 2ms, prepare 458ms)
+   Start at  19:18:26
+   Duration  306ms (transform 179ms, setup 0ms, collect 0ms, tests 0ms, environment 1ms, prepare 396ms)
 
 
 ⎯⎯⎯⎯⎯⎯ Failed Suites 6 ⎯⎯⎯⎯⎯⎯⎯

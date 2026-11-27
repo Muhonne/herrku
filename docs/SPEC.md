@@ -23,6 +23,7 @@ Status: **agreed, buildable**. Decisions are final unless superseded by a dated 
 | Search | Substring on a precomputed `search_text` (title + ingredient names), plus tag filter |
 | Shopping list | Server-side merge by name+unit, servings scaling, plain-text clipboard output |
 | API access | Session cookie for the SPA; personal bearer tokens (`hk_…`) for scripts and AI tools |
+| AI access | Thin stdio MCP server (`mcp/`) exposing search/get/create/update/tags/shopping via a personal token |
 
 ---
 
@@ -735,6 +736,7 @@ Clarifications added on the readiness review (same date):
 - Node 24 is the image base; development was verified on Node 26.
 - `npm run seed` is a local tool: it refuses `--e2e` under `NODE_ENV=production` and otherwise forces development mode.
 - Personal API tokens (`migrations/0002_api_tokens.sql`) were added after v1: bearer resolution runs before the CSRF check, expiry and disabled-user state are checked per request, and the rate-limit key is a hash of the `Authorization` header.
+- `mcp/` is a separate stdio process, not part of the server image. It authenticates with a personal token from `HERRKU_URL`/`HERRKU_TOKEN` and exposes six thin tools against the same REST API; `npm run smoke:mcp` exercises it end to end.
 
 ## 18. Deferred (not open, just later)
 

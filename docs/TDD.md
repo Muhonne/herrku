@@ -1,6 +1,6 @@
 # TDD audit
 
-Generated 2026-11-27T17:11:15.980Z on Node v26.13.0.
+Generated 2026-11-27T17:19:16.333Z on Node v26.13.0.
 
 ## Method
 
@@ -30,7 +30,8 @@ machine-readable result is `docs/tdd-audit.json`.
 | 07-m4-scaling | M4: shopping list scales by requested servings | Ignore the servings multiplier | 1 — × POST /api/shopping-list > merges, scales and renders a plain-text list | 0 | pass |
 | 08-m5-last-admin | M5: the last active admin cannot be removed | Disable the last-admin guard | 1 — × disabled accounts > refuses to disable the last admin | 0 | pass |
 | 09-api-tokens | Personal API tokens: expiry is enforced | Accept expired bearer tokens | 1 — × api tokens > rejects unknown, revoked and expired tokens | 0 | pass |
-| 10-ui-clipboard | UI: the copy button actually writes to the clipboard | Report success without writing to the clipboard | 1 — ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (799ms) | 0 | pass |
+| 10-mcp-bearer | MCP client authenticates with the personal token | Send a fixed, invalid bearer token | 1 — × HerrkuClient > sends a bearer token and builds search query parameters | 0 | pass |
+| 11-ui-clipboard | UI: the copy button actually writes to the clipboard | Report success without writing to the clipboard | 1 — ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (817ms) | 0 | pass |
 
 ## Detail
 
@@ -114,9 +115,16 @@ Red: exit 1; failing tests:
 - FAIL  server/test/tokens.test.ts > api tokens > rejects unknown, revoked and expired tokens
 Restored: exit 0
 Logs: `docs/tdd-logs/09-api-tokens.red.log`, `docs/tdd-logs/09-api-tokens.green.log`
-### 10-ui-clipboard — UI: the copy button actually writes to the clipboard
+### 10-mcp-bearer — MCP client authenticates with the personal token
+Mutation: Send a fixed, invalid bearer token
+Red: exit 1; failing tests:
+- × HerrkuClient > sends a bearer token and builds search query parameters
+- FAIL  mcp/test/client.test.ts > HerrkuClient > sends a bearer token and builds search query parameters
+Restored: exit 0
+Logs: `docs/tdd-logs/10-mcp-bearer.red.log`, `docs/tdd-logs/10-mcp-bearer.green.log`
+### 11-ui-clipboard — UI: the copy button actually writes to the clipboard
 Mutation: Report success without writing to the clipboard
 Red: exit 1; failing tests:
-- ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (799ms)
+- ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (817ms)
 Restored: exit 0
-Logs: `docs/tdd-logs/10-ui-clipboard.red.log`, `docs/tdd-logs/10-ui-clipboard.green.log`
+Logs: `docs/tdd-logs/11-ui-clipboard.red.log`, `docs/tdd-logs/11-ui-clipboard.green.log`

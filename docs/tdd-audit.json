@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T17:11:15.980Z",
+  "generatedAt": "2026-11-27T17:19:16.333Z",
   "node": "v26.13.0",
   "results": [
     {
@@ -213,7 +213,27 @@
       "error": null
     },
     {
-      "id": "10-ui-clipboard",
+      "id": "10-mcp-bearer",
+      "title": "MCP client authenticates with the personal token",
+      "mutation": "Send a fixed, invalid bearer token",
+      "file": "mcp/src/client.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× HerrkuClient > sends a bearer token and builds search query parameters",
+          "FAIL  mcp/test/client.test.ts > HerrkuClient > sends a bearer token and builds search query parameters"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "11-ui-clipboard",
       "title": "UI: the copy button actually writes to the clipboard",
       "mutation": "Report success without writing to the clipboard",
       "file": "web/src/lib/clipboard.ts",
@@ -221,7 +241,7 @@
         "exit": 1,
         "timedOut": false,
         "failedTests": [
-          "✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (799ms)"
+          "✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (817ms)"
         ]
       },
       "green": {

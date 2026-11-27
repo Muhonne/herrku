@@ -1,0 +1,11 @@
+[WebServer] Seed complete
+[WebServer]   admin:  admin / admin-password-123
+[WebServer]   member: friend / member-password-1
+[WebServer]   data:   /home/mattias/hobby/herrku/.e2e-data
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (801ms)
+
+  1 passed (2.2s)
+

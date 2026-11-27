@@ -1,11 +1,11 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ✓ shared/test/parser.test.ts (25 tests) 8ms
+ ✓ shared/test/parser.test.ts (25 tests) 7ms
 
  Test Files  1 passed (1)
       Tests  25 passed (25)
-   Start at  19:10:34
-   Duration  398ms (transform 57ms, setup 0ms, collect 110ms, tests 8ms, environment 0ms, prepare 59ms)
+   Start at  19:18:29
+   Duration  410ms (transform 69ms, setup 0ms, collect 108ms, tests 7ms, environment 0ms, prepare 80ms)
 
 

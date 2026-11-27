@@ -1,24 +1,24 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/tokens.test.ts (11 tests | 1 failed) 488ms
-   ✓ api tokens > requires a session or token to manage tokens 115ms
-   ✓ api tokens > issues a token once, stores only its hash, and lists only a prefix 40ms
+ ❯ server/test/tokens.test.ts (11 tests | 1 failed) 529ms
+   ✓ api tokens > requires a session or token to manage tokens 112ms
+   ✓ api tokens > issues a token once, stores only its hash, and lists only a prefix 34ms
    ✓ api tokens > authenticates requests with a bearer token 31ms
-   ✓ api tokens > accepts bearer mutations without an Origin header, while cookies still require CSRF 44ms
-   × api tokens > rejects unknown, revoked and expired tokens 30ms
+   ✓ api tokens > accepts bearer mutations without an Origin header, while cookies still require CSRF 55ms
+   × api tokens > rejects unknown, revoked and expired tokens 34ms
      → expected 200 to be 401 // Object.is equality
-   ✓ api tokens > rejects tokens belonging to disabled users 46ms
-   ✓ api tokens > keeps role rules for token-authenticated requests 45ms
-   ✓ api tokens > tracks last use and lets the owner revoke a token 25ms
-   ✓ api tokens > does not allow deleting someone else’s token 49ms
-   ✓ api tokens > validates token names and expiry values 29ms
+   ✓ api tokens > rejects tokens belonging to disabled users 53ms
+   ✓ api tokens > keeps role rules for token-authenticated requests 51ms
+   ✓ api tokens > tracks last use and lets the owner revoke a token 36ms
+   ✓ api tokens > does not allow deleting someone else’s token 57ms
+   ✓ api tokens > validates token names and expiry values 31ms
    ✓ api tokens > supports the shopping list and recipe search through a token 34ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 10 passed (11)
-   Start at  19:11:00
-   Duration  1.24s (transform 156ms, setup 0ms, collect 433ms, tests 488ms, environment 2ms, prepare 83ms)
+   Start at  19:18:56
+   Duration  1.34s (transform 168ms, setup 0ms, collect 414ms, tests 529ms, environment 0ms, prepare 76ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯

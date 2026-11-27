@@ -1,20 +1,20 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/health.test.ts (7 tests | 1 failed) 227ms
-   ✓ health > reports ok when the database answers 105ms
-   ✓ health > is reachable without a session 19ms
-   ✓ migrations > creates every table from scratch 21ms
-   × migrations > is idempotent across boots on the same data dir 23ms
+ ❯ server/test/health.test.ts (7 tests | 1 failed) 238ms
+   ✓ health > reports ok when the database answers 113ms
+   ✓ health > is reachable without a session 22ms
+   ✓ migrations > creates every table from scratch 18ms
+   × migrations > is idempotent across boots on the same data dir 20ms
      → Migration 0001_init.sql failed: table users already exists
-   ✓ routing > returns a JSON 404 envelope for unknown api routes 24ms
-   ✓ routing > sets a strict CSP in production and leaves HSTS to the proxy 13ms
-   ✓ routing > serves the SPA shell for unknown non-api GETs when a build exists 19ms
+   ✓ routing > returns a JSON 404 envelope for unknown api routes 23ms
+   ✓ routing > sets a strict CSP in production and leaves HSTS to the proxy 19ms
+   ✓ routing > serves the SPA shell for unknown non-api GETs when a build exists 21ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 6 passed (7)
-   Start at  19:10:37
-   Duration  985ms (transform 134ms, setup 0ms, collect 379ms, tests 227ms, environment 0ms, prepare 59ms)
+   Start at  19:18:32
+   Duration  1.02s (transform 158ms, setup 0ms, collect 427ms, tests 238ms, environment 0ms, prepare 119ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯

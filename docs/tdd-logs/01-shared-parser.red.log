@@ -1,8 +1,8 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ shared/test/parser.test.ts (25 tests | 4 failed) 13ms
-   × parseIngredient > parses "1 1/2 cups flour" 6ms
+ ❯ shared/test/parser.test.ts (25 tests | 4 failed) 17ms
+   × parseIngredient > parses "1 1/2 cups flour" 11ms
      → expected { quantity: 1.5, …(4) } to deeply equal { quantity: 1.5, …(4) }
    ✓ parseIngredient > parses "2–3 cloves garlic, minced" 1ms
    × parseIngredient > parses "½ tsp salt" 1ms
@@ -15,7 +15,7 @@
    ✓ parseIngredient > parses "1 (400 g) tin chickpeas" 0ms
    × parseIngredient > parses "1/2 cup milk" 1ms
      → expected { quantity: 0.5, …(4) } to deeply equal { quantity: 0.5, …(4) }
-   × parseIngredient > parses "1½ tbsp sugar" 1ms
+   × parseIngredient > parses "1½ tbsp sugar" 0ms
      → expected { quantity: 1.5, …(4) } to deeply equal { quantity: 1.5, …(4) }
    ✓ parseIngredient > parses "2 to 3 cloves garlic" 0ms
    ✓ parseIngredient > parses "1.5 kg potatoes" 0ms
@@ -34,8 +34,8 @@
 
  Test Files  1 failed (1)
       Tests  4 failed | 21 passed (25)
-   Start at  19:10:33
-   Duration  533ms (transform 96ms, setup 0ms, collect 148ms, tests 13ms, environment 0ms, prepare 121ms)
+   Start at  19:18:28
+   Duration  455ms (transform 51ms, setup 0ms, collect 109ms, tests 17ms, environment 0ms, prepare 58ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯

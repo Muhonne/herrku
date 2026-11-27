@@ -122,7 +122,17 @@ const phases = [
     test: { cmd: 'npx', args: ['vitest', 'run', 'server/test/tokens.test.ts'] },
   },
   {
-    id: '10-ui-clipboard',
+    id: '10-mcp-bearer',
+    title: 'MCP client authenticates with the personal token',
+    kind: 'mutate',
+    file: 'mcp/src/client.ts',
+    find: 'authorization: `Bearer ${this.token}`',
+    replace: "authorization: 'Bearer wrong-token'",
+    mutation: 'Send a fixed, invalid bearer token',
+    test: { cmd: 'npx', args: ['vitest', 'run', 'mcp/test'] },
+  },
+  {
+    id: '11-ui-clipboard',
     title: 'UI: the copy button actually writes to the clipboard',
     kind: 'mutate',
     file: 'web/src/lib/clipboard.ts',

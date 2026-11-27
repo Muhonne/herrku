@@ -20,7 +20,7 @@ If npm blocks native install scripts on your machine, run `npm rebuild better-sq
 ## Tests
 
 ```bash
-npm test            # 238 unit + route tests (Vitest)
+npm test            # 251 unit + route tests (Vitest)
 npm run typecheck
 npm run lint
 npm run test:e2e    # builds, seeds .e2e-data, runs Playwright on :3111
@@ -40,6 +40,34 @@ curl -X POST -H "Authorization: Bearer hk_..." -H 'content-type: application/jso
 ```
 
 Bearer requests need no cookies and no `Origin` header, which is what makes them usable from CLIs, agents, and MCP servers. A token inherits its owner's role; revoke it from the same page.
+
+## MCP server
+
+`mcp/` is a thin stdio MCP server over the same REST API. Tools: `search_recipes`, `get_recipe`, `create_recipe`, `update_recipe`, `list_tags`, `build_shopping_list`. It authenticates with a personal API token, so create a dedicated one per client and revoke it when you are done.
+
+```bash
+npm run build
+HERRKU_URL=https://recipes.example HERRKU_TOKEN=hk_... node mcp/dist/index.js
+```
+
+Client config (Claude Desktop, Cursor, etc.):
+
+```json
+{
+  "mcpServers": {
+    "herrku": {
+      "command": "node",
+      "args": ["/absolute/path/to/herrku/mcp/dist/index.js"],
+      "env": {
+        "HERRKU_URL": "https://recipes.example",
+        "HERRKU_TOKEN": "hk_..."
+      }
+    }
+  }
+}
+```
+
+`npm run smoke:mcp` runs a full create → search → shopping-list → update → cleanup round-trip against a running instance (`HERRKU_URL`, defaults to `http://localhost:5173`).
 
 ## Production
 

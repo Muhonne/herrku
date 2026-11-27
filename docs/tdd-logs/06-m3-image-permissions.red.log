@@ -1,23 +1,23 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/images.test.ts (10 tests | 1 failed) 487ms
-   ✓ image upload > stores a full image and a thumbnail and returns urls 134ms
-   ✓ image upload > serves the image through the api with private caching 44ms
-   ✓ image upload > lets any signed-in user read an image but requires a session 62ms
-   ✓ image upload > marks hasImage and thumbUrl on the list 38ms
-   × image upload > forbids a non-owner member from uploading 54ms
+ ❯ server/test/images.test.ts (10 tests | 1 failed) 501ms
+   ✓ image upload > stores a full image and a thumbnail and returns urls 149ms
+   ✓ image upload > serves the image through the api with private caching 42ms
+   ✓ image upload > lets any signed-in user read an image but requires a session 60ms
+   ✓ image upload > marks hasImage and thumbUrl on the list 34ms
+   × image upload > forbids a non-owner member from uploading 59ms
      → expected 200 to be 403 // Object.is equality
    ✓ image upload > rejects non-image bytes with 415 27ms
-   ✓ image upload > rejects files over the configured limit with 413 28ms
-   ✓ image upload > replaces the previous files on re-upload 37ms
-   ✓ image upload > deletes image files when the recipe is deleted 35ms
-   ✓ image upload > returns 404 when a recipe has no image 28ms
+   ✓ image upload > rejects files over the configured limit with 413 30ms
+   ✓ image upload > replaces the previous files on re-upload 33ms
+   ✓ image upload > deletes image files when the recipe is deleted 39ms
+   ✓ image upload > returns 404 when a recipe has no image 27ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 9 passed (10)
-   Start at  19:10:49
-   Duration  1.26s (transform 133ms, setup 0ms, collect 384ms, tests 487ms, environment 0ms, prepare 62ms)
+   Start at  19:18:44
+   Duration  1.31s (transform 164ms, setup 0ms, collect 417ms, tests 501ms, environment 0ms, prepare 78ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
