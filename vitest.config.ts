@@ -8,7 +8,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ['shared/test/**/*.test.ts', 'server/test/**/*.test.ts'],
+    include: ['shared/test/**/*.test.ts', 'server/test/**/*.test.ts', 'mcp/test/**/*.test.ts'],
     environment: 'node',
     env: { NODE_ENV: 'test' },
     pool: 'forks',
