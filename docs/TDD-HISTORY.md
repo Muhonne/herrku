@@ -61,6 +61,17 @@ proves the corresponding tests fail, restores, and proves they pass. Phase 00
 of the audit also removes `shared/src` and confirms the suite is red, matching
 commit `9ec653f`.
 
+## Extension: personal API tokens
+
+The post-v1 token work followed the same order:
+
+| Commit | Contents | Verification |
+|---|---|---|
+| `9f00b4a` | token route tests, the migration expectation in the health test, and the Playwright token flow | red at that commit: `/api/tokens` returns 404 and the Account page has no token section |
+| `ab3a247` | `api_tokens` migration, bearer resolution, token routes, Account UI, docs | 238 Vitest tests, 4 Playwright flows, `lint`/`typecheck`/`build` green; audit phase `09-api-tokens` red->green |
+
+The mutation audit now covers 11 phases (`docs/TDD.md`, `docs/tdd-audit.json`).
+
 ## Limits
 
 Order in a recorded history is not proof of the order in a deleted one. What the
