@@ -97,7 +97,7 @@ export default function AccountPage(): React.ReactNode {
       <Card className="space-y-4">
         <h2 className="text-lg font-semibold">Change password</h2>
         {passwordError ? <ErrorBox message={passwordError} /> : null}
-        {changePassword.isSuccess ? <p className="text-sm text-emerald-800">Password updated.</p> : null}
+        {changePassword.isSuccess ? <p className="text-sm text-[var(--accent)]">Password updated.</p> : null}
         <form
           className="space-y-3"
           onSubmit={(event) => {
@@ -144,22 +144,22 @@ export default function AccountPage(): React.ReactNode {
           </Button>
         </div>
 
-        {sessions.isLoading ? <p className="text-sm text-stone-500">Loading…</p> : null}
+        {sessions.isLoading ? <p className="text-sm text-[var(--muted)]">Loading…</p> : null}
         {sessions.isError ? <ErrorBox message="Could not load sessions." /> : null}
 
-        <ul className="divide-y divide-stone-100">
+        <ul className="divide-y divide-[var(--line)]">
           {sessions.data?.sessions.map((session) => (
             <li key={session.id} className="flex flex-wrap items-center gap-3 py-3">
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm text-stone-800">
+                <p className="truncate text-sm text-[var(--text)]">
                   {describe(session)}
                   {session.current ? (
-                    <span className="ml-2 rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-900">
+                    <span className="ml-2 rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-xs text-[var(--accent-bright)]">
                       this device
                     </span>
                   ) : null}
                 </p>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-[var(--muted)]">
                   Signed in {formatDate(session.createdAt)} · last seen {formatDate(session.lastSeenAt)}
                 </p>
               </div>
@@ -179,9 +179,9 @@ export default function AccountPage(): React.ReactNode {
       <Card className="space-y-4">
         <div>
           <h2 className="text-lg font-semibold">API tokens</h2>
-          <p className="mt-1 text-sm text-stone-600">
+          <p className="mt-1 text-sm text-[var(--muted)]">
             For scripts and AI tools. Send{' '}
-            <code className="rounded bg-stone-100 px-1 py-0.5 text-xs">
+            <code className="rounded bg-[var(--surface-2)] px-1 py-0.5 text-xs">
               Authorization: Bearer &lt;token&gt;
             </code>{' '}
             instead of a session cookie. Tokens inherit your role.
@@ -189,8 +189,8 @@ export default function AccountPage(): React.ReactNode {
         </div>
 
         {newSecret ? (
-          <div className="space-y-2 rounded-lg border border-emerald-300 bg-emerald-50/60 p-3">
-            <p className="text-sm font-medium text-emerald-900">
+          <div className="space-y-2 rounded-lg border border-[var(--accent-edge)] bg-[var(--accent-soft)] p-3">
+            <p className="text-sm font-medium text-[var(--accent-bright)]">
               Copy this token now — it is shown only once.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -256,21 +256,21 @@ export default function AccountPage(): React.ReactNode {
           </Button>
         </form>
 
-        {tokens.isLoading ? <p className="text-sm text-stone-500">Loading…</p> : null}
+        {tokens.isLoading ? <p className="text-sm text-[var(--muted)]">Loading…</p> : null}
         {tokens.isError ? <ErrorBox message="Could not load API tokens." /> : null}
         {tokens.data && tokens.data.tokens.length === 0 ? (
-          <p className="text-sm text-stone-500">No API tokens yet.</p>
+          <p className="text-sm text-[var(--muted)]">No API tokens yet.</p>
         ) : null}
 
-        <ul className="divide-y divide-stone-100">
+        <ul className="divide-y divide-[var(--line)]">
           {tokens.data?.tokens.map((token) => (
             <li key={token.id} className="flex flex-wrap items-center gap-3 py-3">
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-stone-800">
+                <p className="text-sm font-medium text-[var(--text)]">
                   {token.name}
-                  <span className="ml-2 font-mono text-xs text-stone-500">{token.prefix}…</span>
+                  <span className="ml-2 font-mono text-xs text-[var(--muted)]">{token.prefix}…</span>
                 </p>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-[var(--muted)]">
                   Created {formatDate(token.createdAt)} ·{' '}
                   {token.lastUsedAt ? `last used ${formatDate(token.lastUsedAt)}` : 'never used'} ·{' '}
                   {token.expiresAt ? `expires ${formatDate(token.expiresAt)}` : 'no expiry'}

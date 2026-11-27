@@ -1,6 +1,6 @@
 # TDD audit
 
-Generated 2026-11-27T17:19:16.333Z on Node v26.13.0.
+Generated 2026-11-27T17:52:17.147Z on Node v26.13.0.
 
 ## Method
 
@@ -21,7 +21,7 @@ machine-readable result is `docs/tdd-audit.json`.
 | Phase | Area | Injected defect | Red (exit — first failure) | Restored | Verdict |
 |---|---|---|---|---|---|
 | 00-tests-before-implementation | Shared test suites exist and fail with no implementation at all | Move shared/src away entirely | 1 — FAIL  shared/test/format.test.ts [ shared/test/format.test.ts ] | 0 | pass |
-| 01-shared-parser | Shared: ingredient parser (leading whitespace handling) | Stop trimming whitespace before unit matching | 1 — × parseIngredient > parses "1 1/2 cups flour" | 0 | pass |
+| 01-shared-parser | Shared: ingredient parser (leading whitespace handling) | Stop trimming whitespace before unit matching | 1 — × parseIngredient > parses "½ tsp salt" | 0 | pass |
 | 02-shared-merge-notes | Shared: shopping merge note de-duplication | Accept duplicate notes | 1 — × mergeShoppingList > dedupes notes case-insensitively and keeps the first spelling | 0 | pass |
 | 03-m0-migrations | M0: migrations run once per database | Re-apply already-applied migrations | 1 — × migrations > is idempotent across boots on the same data dir | 0 | pass |
 | 04-m1-auth | M1: login rejects wrong passwords | Skip password verification failure | 1 — × login > returns the same generic error for a wrong password and an unknown user | 0 | pass |
@@ -31,7 +31,7 @@ machine-readable result is `docs/tdd-audit.json`.
 | 08-m5-last-admin | M5: the last active admin cannot be removed | Disable the last-admin guard | 1 — × disabled accounts > refuses to disable the last admin | 0 | pass |
 | 09-api-tokens | Personal API tokens: expiry is enforced | Accept expired bearer tokens | 1 — × api tokens > rejects unknown, revoked and expired tokens | 0 | pass |
 | 10-mcp-bearer | MCP client authenticates with the personal token | Send a fixed, invalid bearer token | 1 — × HerrkuClient > sends a bearer token and builds search query parameters | 0 | pass |
-| 11-ui-clipboard | UI: the copy button actually writes to the clipboard | Report success without writing to the clipboard | 1 — ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (817ms) | 0 | pass |
+| 11-ui-clipboard | UI: the copy button actually writes to the clipboard | Report success without writing to the clipboard | 1 — ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (1.8s) | 0 | pass |
 
 ## Detail
 
@@ -49,11 +49,9 @@ Logs: `docs/tdd-logs/00-tests-before-implementation.red.log`, `docs/tdd-logs/00-
 ### 01-shared-parser — Shared: ingredient parser (leading whitespace handling)
 Mutation: Stop trimming whitespace before unit matching
 Red: exit 1; failing tests:
-- × parseIngredient > parses "1 1/2 cups flour"
 - × parseIngredient > parses "½ tsp salt"
-- × parseIngredient > parses "1/2 cup milk"
 - × parseIngredient > parses "1½ tbsp sugar"
-- FAIL  shared/test/parser.test.ts > parseIngredient > parses "1 1/2 cups flour"
+- FAIL  shared/test/parser.test.ts > parseIngredient > parses "½ tsp salt"
 - FAIL  shared/test/parser.test.ts > parseIngredient > parses "1½ tbsp sugar"
 Restored: exit 0
 Logs: `docs/tdd-logs/01-shared-parser.red.log`, `docs/tdd-logs/01-shared-parser.green.log`
@@ -125,6 +123,6 @@ Logs: `docs/tdd-logs/10-mcp-bearer.red.log`, `docs/tdd-logs/10-mcp-bearer.green.
 ### 11-ui-clipboard — UI: the copy button actually writes to the clipboard
 Mutation: Report success without writing to the clipboard
 Red: exit 1; failing tests:
-- ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (817ms)
+- ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (1.8s)
 Restored: exit 0
 Logs: `docs/tdd-logs/11-ui-clipboard.red.log`, `docs/tdd-logs/11-ui-clipboard.green.log`

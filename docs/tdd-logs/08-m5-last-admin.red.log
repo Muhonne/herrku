@@ -1,41 +1,41 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/auth.test.ts (28 tests | 1 failed) 1024ms
-   ✓ bootstrap > creates the first admin from env vars 105ms
-   ✓ bootstrap > does not create a second admin on the next boot 24ms
-   ✓ login > signs in with valid credentials 46ms
-   ✓ login > returns the same generic error for a wrong password and an unknown user 37ms
-   ✓ login > sets HttpOnly, SameSite=Lax and Path=/ on the cookie 26ms
-   ✓ login > uses the __Host- prefixed cookie name when secure 29ms
-   ✓ login > honours staySignedIn by toggling cookie persistence 42ms
-   ✓ me and logout > requires a session 13ms
-   ✓ me and logout > returns the current user 25ms
-   ✓ me and logout > invalidates the session on logout 27ms
+ ❯ server/test/auth.test.ts (28 tests | 1 failed) 1020ms
+   ✓ bootstrap > creates the first admin from env vars 99ms
+   ✓ bootstrap > does not create a second admin on the next boot 27ms
+   ✓ login > signs in with valid credentials 54ms
+   ✓ login > returns the same generic error for a wrong password and an unknown user 45ms
+   ✓ login > sets HttpOnly, SameSite=Lax and Path=/ on the cookie 27ms
+   ✓ login > uses the __Host- prefixed cookie name when secure 26ms
+   ✓ login > honours staySignedIn by toggling cookie persistence 33ms
+   ✓ me and logout > requires a session 16ms
+   ✓ me and logout > returns the current user 26ms
+   ✓ me and logout > invalidates the session on logout 28ms
    ✓ me and logout > refreshes a stale session on use 29ms
-   ✓ me and logout > lists and revokes sessions 44ms
-   ✓ invites > runs the full invite flow 52ms
+   ✓ me and logout > lists and revokes sessions 43ms
+   ✓ invites > runs the full invite flow 45ms
    ✓ invites > rejects a used invite 38ms
    ✓ invites > rejects an expired invite 26ms
-   ✓ invites > rejects an unknown invite token 20ms
-   ✓ invites > rejects a taken username with 409 33ms
+   ✓ invites > rejects an unknown invite token 16ms
+   ✓ invites > rejects a taken username with 409 34ms
    ✓ invites > honours the requested role 33ms
-   ✓ password change and reset > revokes other sessions but keeps the current one 53ms
-   ✓ password change and reset > rejects a wrong current password 40ms
-   ✓ password change and reset > issues a reset link that sets a new password and revokes sessions 64ms
-   ✓ csrf > rejects a mutating request without an origin 21ms
-   ✓ csrf > rejects a foreign origin 20ms
+   ✓ password change and reset > revokes other sessions but keeps the current one 56ms
+   ✓ password change and reset > rejects a wrong current password 38ms
+   ✓ password change and reset > issues a reset link that sets a new password and revokes sessions 69ms
+   ✓ csrf > rejects a mutating request without an origin 19ms
+   ✓ csrf > rejects a foreign origin 15ms
    ✓ csrf > accepts a referer fallback when origin is absent 24ms
-   ✓ rate limiting > returns 429 with Retry-After after too many login attempts 37ms
-   ✓ disabled accounts > rejects live sessions once the user is disabled 42ms
-   × disabled accounts > refuses to disable the last admin 27ms
+   ✓ rate limiting > returns 429 with Retry-After after too many login attempts 34ms
+   ✓ disabled accounts > rejects live sessions once the user is disabled 44ms
+   × disabled accounts > refuses to disable the last admin 32ms
      → expected 403 to be 409 // Object.is equality
-   ✓ disabled accounts > promotes a member to admin with immediate effect 47ms
+   ✓ disabled accounts > promotes a member to admin with immediate effect 41ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 27 passed (28)
-   Start at  19:18:51
-   Duration  1.81s (transform 167ms, setup 0ms, collect 434ms, tests 1.02s, environment 0ms, prepare 90ms)
+   Start at  19:51:51
+   Duration  1.79s (transform 169ms, setup 0ms, collect 426ms, tests 1.02s, environment 0ms, prepare 56ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯

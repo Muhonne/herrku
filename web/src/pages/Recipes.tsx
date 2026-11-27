@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { formatMinutes, useRecipes, useTags } from '../api'
-import { Button, Card, EmptyState, ErrorBox, FullPageLoader, Input, cx } from '../components/ui'
+import { Button, EmptyState, ErrorBox, FullPageLoader, Input, cx } from '../components/ui'
 
 export default function RecipesPage(): React.ReactNode {
   const [search, setSearch] = useState('')
@@ -31,58 +31,82 @@ export default function RecipesPage(): React.ReactNode {
   const total = recipes.data?.total ?? 0
   const pageSize = recipes.data?.pageSize ?? 50
   const hasNext = page * pageSize < total
+  const filtering = query.length > 0 || tags.length > 0
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight">Recipes</h1>
+      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--line)] pb-4">
+        <div>
+          <p className="label">Index</p>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight">Recipes</h1>
+          <p className="mt-1 text-sm text-[var(--muted)]">
+            {total} {total === 1 ? 'record' : 'records'} in the shared library
+          </p>
+        </div>
         <Link to="/recipes/new">
           <Button type="button">New recipe</Button>
         </Link>
-      </div>
+      </header>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Input
-          type="search"
-          aria-label="Search recipes"
-          placeholder="Search title or ingredients…"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-        />
-        <div className="flex items-center gap-2">
-          <Button
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <div className="panel flex flex-1 items-center gap-2 p-2">
+          <span className="label px-1" aria-hidden="true">
+            Find
+          </span>
+          <Input
+            type="search"
+            aria-label="Search recipes"
+            placeholder="Title or ingredient…"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            className="flex-1 border-0 bg-transparent shadow-none"
+          />
+          {filtering ? (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => {
+                setSearch('')
+                setQuery('')
+                setTags([])
+              }}
+            >
+              Clear
+            </Button>
+          ) : null}
+        </div>
+        <div className="flex items-center gap-1">
+          <button
             type="button"
-            variant={sort === 'recent' ? 'primary' : 'secondary'}
             onClick={() => setSort('recent')}
+            className={cx('chip', sort === 'recent' && 'chip-active')}
           >
             Recent
-          </Button>
-          <Button
+          </button>
+          <button
             type="button"
-            variant={sort === 'title' ? 'primary' : 'secondary'}
             onClick={() => setSort('title')}
+            className={cx('chip', sort === 'title' && 'chip-active')}
           >
             A–Z
-          </Button>
+          </button>
         </div>
       </div>
 
       {allTags.data && allTags.data.tags.length > 0 ? (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="label mr-1" aria-hidden="true">
+            Tags
+          </span>
           {allTags.data.tags.map((entry) => (
             <button
               key={entry.tag}
               type="button"
               onClick={() => toggleTag(entry.tag)}
-              className={cx(
-                'rounded-full border px-3 py-1 text-xs font-medium',
-                tags.includes(entry.tag)
-                  ? 'border-emerald-700 bg-emerald-700 text-white'
-                  : 'border-stone-300 bg-white text-stone-700 hover:bg-stone-100',
-              )}
+              className={cx('chip', tags.includes(entry.tag) && 'chip-active')}
             >
               {entry.tag}
-              <span className="ml-1 opacity-60">{entry.count}</span>
+              <span className="opacity-50">{entry.count}</span>
             </button>
           ))}
         </div>
@@ -93,10 +117,12 @@ export default function RecipesPage(): React.ReactNode {
 
       {recipes.data && recipes.data.items.length === 0 ? (
         <EmptyState
-          title="No recipes match"
-          description={query || tags.length > 0 ? 'Try clearing the search or tags.' : 'Create your first recipe.'}
+          title={filtering ? 'No records match' : 'The shelf is empty'}
+          description={
+            filtering ? 'Clear the search or tags.' : 'Create the first recipe in this library.'
+          }
           action={
-            query || tags.length > 0 ? (
+            filtering ? (
               <Button
                 type="button"
                 variant="secondary"
@@ -117,45 +143,57 @@ export default function RecipesPage(): React.ReactNode {
         />
       ) : null}
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {recipes.data?.items.map((recipe) => (
-          <Link key={recipe.id} to={`/recipes/${recipe.slug}`} className="group block">
-            <Card className="h-full transition group-hover:border-emerald-300 group-hover:shadow-md">
-              <div className="mb-3 aspect-[4/3] overflow-hidden rounded-lg bg-stone-100">
-                {recipe.thumbUrl ? (
-                  <img
-                    src={recipe.thumbUrl}
-                    alt=""
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-3xl text-stone-300">
-                    🍲
-                  </div>
-                )}
-              </div>
-              <h2 className="text-base font-semibold text-stone-900">{recipe.title}</h2>
-              {recipe.description ? (
-                <p className="mt-1 line-clamp-2 text-sm text-stone-600">{recipe.description}</p>
-              ) : null}
-              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-stone-500">
-                {recipe.servings ? <span>{recipe.servings} servings</span> : null}
-                {recipe.totalMinutes !== null ? <span>· {formatMinutes(recipe.totalMinutes)}</span> : null}
-              </div>
-              {recipe.tags.length > 0 ? (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {recipe.tags.map((tag) => (
-                    <span key={tag} className="rounded-full bg-stone-100 px-2 py-0.5 text-xs text-stone-600">
+      {recipes.data && recipes.data.items.length > 0 ? (
+        <div className="ledger">
+          <div className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-3 px-4 py-2 sm:grid-cols-[2.5rem_minmax(0,1fr)_11rem_5rem_4rem]">
+            <span className="label">No</span>
+            <span className="label">Title</span>
+            <span className="label hidden sm:block">Tags</span>
+            <span className="label hidden text-right sm:block">Time</span>
+            <span className="label hidden text-right sm:block">Serves</span>
+          </div>
+
+          {recipes.data.items.map((recipe, index) => (
+            <Link
+              key={recipe.id}
+              to={`/recipes/${recipe.slug}`}
+              className="ledger-row rise grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-3 px-4 py-3 sm:grid-cols-[2.5rem_minmax(0,1fr)_11rem_5rem_4rem]"
+              style={{ animationDelay: `${Math.min(index, 8) * 28}ms` }}
+            >
+              <span className="mono text-xs text-[var(--muted)]">
+                {String((page - 1) * pageSize + index + 1).padStart(2, '0')}
+              </span>
+              <span className="min-w-0">
+                <h2 className="block truncate text-[15px] font-medium text-[var(--text)]">
+                  {recipe.title}
+                </h2>
+                {recipe.description ? (
+                  <span className="block truncate text-xs text-[var(--muted)]">
+                    {recipe.description}
+                  </span>
+                ) : null}
+              </span>
+              <span className="hidden flex-wrap gap-1 sm:flex">
+                {recipe.tags.length > 0 ? (
+                  recipe.tags.map((tag) => (
+                    <span key={tag} className="chip">
                       {tag}
                     </span>
-                  ))}
-                </div>
-              ) : null}
-            </Card>
-          </Link>
-        ))}
-      </div>
+                  ))
+                ) : (
+                  <span className="mono text-xs text-[var(--muted-low)]">—</span>
+                )}
+              </span>
+              <span className="mono hidden text-right text-xs text-[var(--muted)] sm:block">
+                {formatMinutes(recipe.totalMinutes)}
+              </span>
+              <span className="mono hidden text-right text-xs text-[var(--muted)] sm:block">
+                {recipe.servings ?? '—'}
+              </span>
+            </Link>
+          ))}
+        </div>
+      ) : null}
 
       {total > pageSize ? (
         <div className="flex items-center justify-between">
@@ -167,8 +205,8 @@ export default function RecipesPage(): React.ReactNode {
           >
             Previous
           </Button>
-          <span className="text-sm text-stone-500">
-            Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
+          <span className="mono text-xs text-[var(--muted)]">
+            Page {page} / {Math.max(1, Math.ceil(total / pageSize))}
           </span>
           <Button
             type="button"

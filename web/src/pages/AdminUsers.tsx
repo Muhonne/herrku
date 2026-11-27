@@ -85,8 +85,8 @@ export default function AdminUsersPage(): React.ReactNode {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold tracking-tight">Users</h1>
         <div className="flex items-end gap-2">
-          <label className="text-sm text-stone-600">
-            <span className="block text-xs font-medium text-stone-500">Role</span>
+          <label className="text-sm text-[var(--muted)]">
+            <span className="block text-xs font-medium text-[var(--muted)]">Role</span>
             <Select value={role} onChange={(event) => setRole(event.target.value as 'member' | 'admin')}>
               <option value="member">member</option>
               <option value="admin">admin</option>
@@ -101,8 +101,8 @@ export default function AdminUsersPage(): React.ReactNode {
       {failureMessage ? <ErrorBox message={failureMessage} /> : null}
 
       {link ? (
-        <Card className="space-y-2 border-emerald-300 bg-emerald-50/60">
-          <p className="text-sm font-medium text-emerald-900">
+        <Card className="space-y-2 border-[var(--accent-edge)] bg-[var(--accent-soft)]">
+          <p className="text-sm font-medium text-[var(--accent-bright)]">
             Single-use link — copy it now, it cannot be shown again.
           </p>
           <div className="flex flex-wrap gap-2">
@@ -121,7 +121,7 @@ export default function AdminUsersPage(): React.ReactNode {
         {users.isLoading ? <FullPageLoader /> : null}
         {users.isError ? <ErrorBox message="Could not load users." /> : null}
         <table className="w-full text-left text-sm">
-          <thead className="text-xs uppercase tracking-wide text-stone-500">
+          <thead className="text-xs uppercase tracking-wide text-[var(--muted)]">
             <tr>
               <th className="pb-2">User</th>
               <th className="pb-2">Role</th>
@@ -130,14 +130,14 @@ export default function AdminUsersPage(): React.ReactNode {
               <th className="pb-2 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-stone-100">
+          <tbody className="divide-y divide-[var(--line)]">
             {users.data?.users.map((user) => {
               const isSelf = user.id === selfId
               return (
                 <tr key={user.id}>
                   <td className="py-2.5">
-                    <span className="font-medium text-stone-800">{user.displayName}</span>
-                    <span className="block text-xs text-stone-500">@{user.username}</span>
+                    <span className="font-medium text-[var(--text)]">{user.displayName}</span>
+                    <span className="block text-xs text-[var(--muted)]">@{user.username}</span>
                   </td>
                   <td className="py-2.5">
                     <Select
@@ -160,14 +160,14 @@ export default function AdminUsersPage(): React.ReactNode {
                     <span
                       className={
                         user.disabled
-                          ? 'rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-800'
-                          : 'rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-900'
+                          ? 'rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-xs text-[#ffb3a2]'
+                          : 'rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-xs text-[var(--accent-bright)]'
                       }
                     >
                       {user.disabled ? 'disabled' : 'active'}
                     </span>
                   </td>
-                  <td className="py-2.5 text-xs text-stone-500">
+                  <td className="py-2.5 text-xs text-[var(--muted)]">
                     {user.lastLoginAt ? formatDate(user.lastLoginAt) : 'never'}
                   </td>
                   <td className="py-2.5">
@@ -209,16 +209,16 @@ export default function AdminUsersPage(): React.ReactNode {
 
       <Card>
         <h2 className="mb-3 text-lg font-semibold">Pending invites</h2>
-        {invites.isLoading ? <p className="text-sm text-stone-500">Loading…</p> : null}
+        {invites.isLoading ? <p className="text-sm text-[var(--muted)]">Loading…</p> : null}
         {invites.data && invites.data.invites.length === 0 ? (
-          <p className="text-sm text-stone-500">No pending invites.</p>
+          <p className="text-sm text-[var(--muted)]">No pending invites.</p>
         ) : null}
-        <ul className="divide-y divide-stone-100">
+        <ul className="divide-y divide-[var(--line)]">
           {invites.data?.invites.map((invite) => (
             <li key={invite.id} className="flex flex-wrap items-center justify-between gap-2 py-2.5">
-              <div className="text-sm text-stone-700">
+              <div className="text-sm text-[var(--text-soft)]">
                 <span className="font-medium">{invite.role}</span>
-                <span className="text-stone-500"> · expires {formatDate(invite.expiresAt)}</span>
+                <span className="text-[var(--muted)]"> · expires {formatDate(invite.expiresAt)}</span>
               </div>
               <Button
                 type="button"
@@ -231,7 +231,7 @@ export default function AdminUsersPage(): React.ReactNode {
             </li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-stone-500">
+        <p className="mt-2 text-xs text-[var(--muted)]">
           Invite links are shown once. To get a new link, revoke and create another.
         </p>
       </Card>

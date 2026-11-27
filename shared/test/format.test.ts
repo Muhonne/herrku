@@ -32,8 +32,8 @@ describe('formatLine', () => {
 
   it('renders a quantified line', () => {
     expect(
-      formatLine({ ...base, quantity: 2, unit: 'cup', name: 'flour' }),
-    ).toBe('2 cups flour')
+      formatLine({ ...base, quantity: 300, unit: 'g', name: 'flour' }),
+    ).toBe('300 g flour')
   })
 
   it('renders a weight line without pluralizing', () => {
@@ -67,6 +67,6 @@ describe('formatLine', () => {
 
 describe('unitLabel', () => {
   it('uses singular for a fractional count below one', () => {
-    expect(unitLabel('cup', 0.5)).toBe('cup')
+    expect(unitLabel('clove', 0.5)).toBe('clove')
   })
 })

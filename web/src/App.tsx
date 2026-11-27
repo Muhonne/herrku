@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router'
 import Layout from './components/Layout'
 import AccountPage from './pages/Account'
 import AdminUsersPage from './pages/AdminUsers'
+import HelpPage from './pages/Help'
 import InvitePage from './pages/Invite'
 import LoginPage from './pages/Login'
 import RecipeDetailPage from './pages/RecipeDetail'
@@ -21,6 +22,7 @@ export default function App(): React.ReactNode {
         <Route path="/recipes/:slug" element={<RecipeDetailPage />} />
         <Route path="/recipes/:slug/edit" element={<RecipeFormPage />} />
         <Route path="/shopping-list" element={<ShoppingListPage />} />
+        <Route path="/help" element={<HelpPage />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/admin/users" element={<AdminUsersPage />} />
       </Route>

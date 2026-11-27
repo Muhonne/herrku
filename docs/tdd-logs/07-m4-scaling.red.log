@@ -1,30 +1,30 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/shopping.test.ts (5 tests | 1 failed) 247ms
-   × POST /api/shopping-list > merges, scales and renders a plain-text list 140ms
-     → expected '3 cups flour\n3–5 cloves garlic (Minc…' to be '4 cups flour\n5–8 cloves garlic (Minc…' // Object.is equality
-   ✓ POST /api/shopping-list > uses multiplier 1 when a recipe has no servings 28ms
-   ✓ POST /api/shopping-list > rejects an empty selection with 400 35ms
-   ✓ POST /api/shopping-list > returns 404 for an unknown recipe 24ms
-   ✓ POST /api/shopping-list > requires a session 19ms
+ ❯ server/test/shopping.test.ts (5 tests | 1 failed) 246ms
+   × POST /api/shopping-list > merges, scales and renders a plain-text list 135ms
+     → expected '500 g flour\n3–5 cloves garlic (Mince…' to be '700 g flour\n5–8 cloves garlic (Mince…' // Object.is equality
+   ✓ POST /api/shopping-list > uses multiplier 1 when a recipe has no servings 31ms
+   ✓ POST /api/shopping-list > rejects an empty selection with 400 33ms
+   ✓ POST /api/shopping-list > returns 404 for an unknown recipe 29ms
+   ✓ POST /api/shopping-list > requires a session 17ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 4 passed (5)
-   Start at  19:18:48
-   Duration  981ms (transform 137ms, setup 0ms, collect 385ms, tests 247ms, environment 0ms, prepare 54ms)
+   Start at  19:51:48
+   Duration  884ms (transform 125ms, setup 0ms, collect 353ms, tests 246ms, environment 0ms, prepare 56ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  server/test/shopping.test.ts > POST /api/shopping-list > merges, scales and renders a plain-text list
-AssertionError: expected '3 cups flour\n3–5 cloves garlic (Minc…' to be '4 cups flour\n5–8 cloves garlic (Minc…' // Object.is equality
+AssertionError: expected '500 g flour\n3–5 cloves garlic (Mince…' to be '700 g flour\n5–8 cloves garlic (Mince…' // Object.is equality
 
 - Expected
 + Received
 
-- 4 cups flour
-+ 3 cups flour
+- 700 g flour
++ 500 g flour
 - 5–8 cloves garlic (Minced)
 + 3–5 cloves garlic (Minced)
   salt (to taste)
@@ -36,7 +36,7 @@ AssertionError: expected '3 cups flour\n3–5 cloves garlic (Minc…' to be '4 c
      73|     const body = response.json()
      74|     expect(body.text).toBe(
        |                       ^
-     75|       '4 cups flour\n5–8 cloves garlic (Minced)\nsalt (to taste)\n1 ts…
+     75|       '700 g flour\n5–8 cloves garlic (Minced)\nsalt (to taste)\n1 tsp…
      76|     )
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯

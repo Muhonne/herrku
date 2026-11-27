@@ -7,7 +7,7 @@ describe('UNIT_TOKENS', () => {
   })
 
   it('contains the canonical tokens used by the parser', () => {
-    for (const token of ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'clove', 'can', 'piece']) {
+    for (const token of ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'clove', 'can', 'piece']) {
       expect(UNIT_TOKENS).toContain(token)
     }
   })
@@ -35,8 +35,6 @@ describe('matchUnit', () => {
     ['teaspoons', 'tsp'],
     ['tbsp', 'tbsp'],
     ['tablespoons', 'tbsp'],
-    ['cup', 'cup'],
-    ['cups', 'cup'],
     ['oz', 'oz'],
     ['ounces', 'oz'],
     ['lb', 'lb'],
@@ -74,11 +72,8 @@ describe('matchUnit', () => {
 
 describe('unitLabel', () => {
   it.each([
-    ['cup', 1, 'cup'],
-    ['cup', 2, 'cups'],
-    ['cup', null, 'cup'],
-    ['clove', 3, 'cloves'],
     ['clove', 1, 'clove'],
+    ['clove', 3, 'cloves'],
     ['g', 400, 'g'],
     ['kg', 1.5, 'kg'],
     ['tsp', 2, 'tsp'],

@@ -16,18 +16,16 @@ export function cx(...classes: Array<string | false | null | undefined>): string
   return classes.filter(Boolean).join(' ')
 }
 
-export const inputClass =
-  'w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 shadow-sm placeholder:text-stone-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:bg-stone-100 disabled:text-stone-500'
-
-export const labelClass = 'block text-sm font-medium text-stone-700'
+export const inputClass = 'input'
+export const labelClass = 'label block'
 
 type Variant = 'primary' | 'secondary' | 'danger' | 'ghost'
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-emerald-700 text-white hover:bg-emerald-800 disabled:bg-emerald-700/50',
-  secondary: 'border border-stone-300 bg-white text-stone-800 hover:bg-stone-100',
-  danger: 'bg-red-700 text-white hover:bg-red-800',
-  ghost: 'text-stone-600 hover:bg-stone-200',
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  danger: 'btn-danger',
+  ghost: 'btn-ghost',
 }
 
 export function Button({
@@ -35,31 +33,22 @@ export function Button({
   className,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }): ReactNode {
-  return (
-    <button
-      className={cx(
-        'inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60',
-        variants[variant],
-        className,
-      )}
-      {...props}
-    />
-  )
+  return <button className={cx('btn', variants[variant], className)} {...props} />
 }
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>): ReactNode {
   const { className, ...rest } = props
-  return <input className={cx(inputClass, className)} {...rest} />
+  return <input className={cx('input', className)} {...rest} />
 }
 
 export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>): ReactNode {
   const { className, ...rest } = props
-  return <textarea className={cx(inputClass, 'min-h-20', className)} {...rest} />
+  return <textarea className={cx('input', className)} {...rest} />
 }
 
 export function Select(props: SelectHTMLAttributes<HTMLSelectElement>): ReactNode {
   const { className, ...rest } = props
-  return <select className={cx(inputClass, className)} {...rest} />
+  return <select className={cx('input', className)} {...rest} />
 }
 
 export function Field({
@@ -75,29 +64,53 @@ export function Field({
 }): ReactNode {
   return (
     <label className="block space-y-1.5">
-      <span className={labelClass}>{label}</span>
+      <span className="label block">{label}</span>
       {children}
-      {hint && !error ? <span className="block text-xs text-stone-500">{hint}</span> : null}
-      {error ? <span className="block text-xs text-red-700">{error}</span> : null}
+      {hint && !error ? <span className="block text-xs text-[var(--muted)]">{hint}</span> : null}
+      {error ? <span className="block text-xs text-[#ffb3a2]">{error}</span> : null}
     </label>
   )
 }
 
-export function Card({ children, className }: { children: ReactNode; className?: string }): ReactNode {
+export function Card({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}): ReactNode {
+  return <div className={cx('panel p-5', className)}>{children}</div>
+}
+
+export function Switch({
+  checked,
+  onChange,
+  label,
+  name,
+}: {
+  checked: boolean
+  onChange: (checked: boolean) => void
+  label: string
+  name?: string
+}): ReactNode {
   return (
-    <div className={cx('rounded-xl border border-stone-200 bg-white p-5 shadow-sm', className)}>
-      {children}
-    </div>
+    <label className="switch text-sm text-[var(--text-soft)]">
+      <input
+        type="checkbox"
+        name={name}
+        checked={checked}
+        onChange={(event) => onChange(event.target.checked)}
+      />
+      <span className="switch-track" aria-hidden="true">
+        <span className="switch-knob" />
+      </span>
+      <span>{label}</span>
+    </label>
   )
 }
 
 export function Spinner(): ReactNode {
-  return (
-    <span
-      aria-label="Loading"
-      className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-stone-300 border-t-emerald-600"
-    />
-  )
+  return <span aria-label="Loading" className="spinner" />
 }
 
 export function FullPageLoader(): ReactNode {
@@ -118,9 +131,9 @@ export function EmptyState({
   action?: ReactNode
 }): ReactNode {
   return (
-    <div className="rounded-xl border border-dashed border-stone-300 bg-white/60 p-10 text-center">
-      <p className="text-base font-medium text-stone-800">{title}</p>
-      {description ? <p className="mt-1 text-sm text-stone-500">{description}</p> : null}
+    <div className="empty">
+      <p className="text-base font-medium text-[var(--text)]">{title}</p>
+      {description ? <p className="mt-1 text-sm text-[var(--muted)]">{description}</p> : null}
       {action ? <div className="mt-4 flex justify-center">{action}</div> : null}
     </div>
   )
@@ -128,7 +141,7 @@ export function EmptyState({
 
 export function ErrorBox({ message }: { message: string }): ReactNode {
   return (
-    <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+    <p role="alert" className="error-box">
       {message}
     </p>
   )
@@ -152,10 +165,7 @@ export function ToastProvider({ children }: { children: ReactNode }): ReactNode 
     <ToastContext.Provider value={value}>
       {children}
       {message ? (
-        <div
-          role="status"
-          className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-stone-900 px-4 py-2 text-sm text-white shadow-lg"
-        >
+        <div role="status" className="toast">
           {message}
         </div>
       ) : null}

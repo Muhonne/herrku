@@ -1,11 +1,11 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ✓ server/test/health.test.ts (7 tests) 283ms
+ ✓ server/test/health.test.ts (7 tests) 237ms
 
  Test Files  1 passed (1)
       Tests  7 passed (7)
-   Start at  19:18:34
-   Duration  1.05s (transform 156ms, setup 0ms, collect 442ms, tests 283ms, environment 0ms, prepare 73ms)
+   Start at  19:51:34
+   Duration  970ms (transform 136ms, setup 0ms, collect 390ms, tests 237ms, environment 0ms, prepare 55ms)
 
 

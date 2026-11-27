@@ -1,21 +1,21 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ mcp/test/client.test.ts (7 tests | 1 failed) 13ms
+ ❯ mcp/test/client.test.ts (7 tests | 1 failed) 20ms
    × HerrkuClient > sends a bearer token and builds search query parameters 10ms
      → expected 'Bearer wrong-token' to be 'Bearer hk_test_token' // Object.is equality
-   ✓ HerrkuClient > normalizes a trailing slash on the base url 0ms
+   ✓ HerrkuClient > normalizes a trailing slash on the base url 1ms
    ✓ HerrkuClient > encodes recipe slugs in the path 0ms
    ✓ HerrkuClient > sends recipe bodies as JSON on create and update 1ms
-   ✓ HerrkuClient > posts shopping list selections 0ms
-   ✓ HerrkuClient > maps API errors to HerrkuError 1ms
-   ✓ HerrkuClient > falls back to a generic message for non-JSON errors 0ms
- ✓ mcp/test/tools.test.ts (6 tests) 36ms
+   ✓ HerrkuClient > posts shopping list selections 1ms
+   ✓ HerrkuClient > maps API errors to HerrkuError 3ms
+   ✓ HerrkuClient > falls back to a generic message for non-JSON errors 1ms
+ ✓ mcp/test/tools.test.ts (6 tests) 38ms
 
  Test Files  1 failed | 1 passed (2)
       Tests  1 failed | 12 passed (13)
-   Start at  19:18:59
-   Duration  512ms (transform 91ms, setup 0ms, collect 220ms, tests 49ms, environment 0ms, prepare 115ms)
+   Start at  19:51:59
+   Duration  515ms (transform 87ms, setup 0ms, collect 230ms, tests 58ms, environment 0ms, prepare 115ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯

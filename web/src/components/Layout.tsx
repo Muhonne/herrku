@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { Link, Navigate, NavLink, Outlet, useNavigate } from 'react-router'
+import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from 'react-router'
 import { request, useMe } from '../api'
 import { Button, FullPageLoader, cx } from './ui'
 
@@ -7,6 +7,7 @@ export default function Layout(): React.ReactNode {
   const me = useMe()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const location = useLocation()
 
   if (me.isLoading) return <FullPageLoader />
   if (!me.data) {
@@ -22,17 +23,23 @@ export default function Layout(): React.ReactNode {
   }
 
   const linkClass = ({ isActive }: { isActive: boolean }): string =>
-    cx(
-      'rounded-lg px-3 py-1.5 text-sm font-medium',
-      isActive ? 'bg-emerald-100 text-emerald-900' : 'text-stone-600 hover:bg-stone-100',
-    )
+    cx('nav-link', isActive && 'nav-link-active')
 
   return (
     <div className="min-h-full">
-      <header className="border-b border-stone-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
-          <Link to="/recipes" className="mr-2 text-lg font-semibold tracking-tight text-emerald-800">
-            herrku
+      <header className="border-b border-[var(--line)] bg-[var(--surface)]">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-2.5">
+          <Link to="/recipes" className="mr-1 flex items-center gap-2">
+            <img
+              src="/brand.png"
+              alt=""
+              width={18}
+              height={18}
+              className="h-[18px] w-[18px] object-contain"
+            />
+            <span className="mono text-[15px] font-semibold uppercase tracking-[0.2em]">
+              herrku
+            </span>
           </Link>
           <nav className="flex flex-wrap items-center gap-1">
             <NavLink to="/recipes" className={linkClass}>
@@ -40,6 +47,9 @@ export default function Layout(): React.ReactNode {
             </NavLink>
             <NavLink to="/shopping-list" className={linkClass}>
               Shopping list
+            </NavLink>
+            <NavLink to="/help" className={linkClass}>
+              Help
             </NavLink>
             <NavLink to="/account" className={linkClass}>
               Account
@@ -51,7 +61,7 @@ export default function Layout(): React.ReactNode {
             ) : null}
           </nav>
           <div className="ml-auto flex items-center gap-3">
-            <span className="hidden text-sm text-stone-500 sm:inline">{me.data.displayName}</span>
+            <span className="label hidden sm:inline">{me.data.displayName}</span>
             <Button variant="secondary" type="button" onClick={() => void signOut()}>
               Sign out
             </Button>
@@ -59,7 +69,9 @@ export default function Layout(): React.ReactNode {
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-4 py-8">
-        <Outlet />
+        <div key={location.pathname} className="rise">
+          <Outlet />
+        </div>
       </main>
     </div>
   )

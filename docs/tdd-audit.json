@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T17:19:16.333Z",
+  "generatedAt": "2026-11-27T17:52:17.147Z",
   "node": "v26.13.0",
   "results": [
     {
@@ -35,11 +35,9 @@
         "exit": 1,
         "timedOut": false,
         "failedTests": [
-          "× parseIngredient > parses \"1 1/2 cups flour\"",
           "× parseIngredient > parses \"½ tsp salt\"",
-          "× parseIngredient > parses \"1/2 cup milk\"",
           "× parseIngredient > parses \"1½ tbsp sugar\"",
-          "FAIL  shared/test/parser.test.ts > parseIngredient > parses \"1 1/2 cups flour\"",
+          "FAIL  shared/test/parser.test.ts > parseIngredient > parses \"½ tsp salt\"",
           "FAIL  shared/test/parser.test.ts > parseIngredient > parses \"1½ tbsp sugar\""
         ]
       },
@@ -241,7 +239,7 @@
         "exit": 1,
         "timedOut": false,
         "failedTests": [
-          "✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (817ms)"
+          "✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (1.8s)"
         ]
       },
       "green": {

@@ -20,7 +20,7 @@ function fail(error: unknown): ToolResult {
 
 const ingredientSchema = z.object({
   section: z.string().max(80).nullable().optional().describe('Optional component group'),
-  rawText: z.string().max(500).nullable().optional().describe('Line as written, e.g. "1 1/2 cups flour"'),
+  rawText: z.string().max(500).nullable().optional().describe('Line as written, e.g. "1 1/200 g flour"'),
   quantity: z.number().min(0).max(1_000_000).nullable().optional(),
   quantityMax: z.number().min(0).max(1_000_000).nullable().optional().describe('Upper bound for ranges'),
   unit: z.enum(UNIT_TOKENS).nullable().optional(),
@@ -96,7 +96,7 @@ export function registerHerrkuTools(server: McpServer, api: HerrkuClient): void 
     {
       title: 'Create recipe',
       description:
-        'Create a recipe. Ingredients may be given as structured fields or as raw lines such as "2 cups flour"; the server parses raw lines.',
+        'Create a recipe. Ingredients may be given as structured fields or as raw lines such as "200 g flour"; the server parses raw lines.',
       inputSchema: recipeFields,
     },
     async (input) => {

@@ -36,10 +36,10 @@ const sample = (overrides: Record<string, unknown> = {}) => ({
   ingredients: [
     {
       section: null,
-      rawText: '1 1/2 cups flour',
-      quantity: 1.5,
+      rawText: '150 g flour',
+      quantity: 150,
       quantityMax: null,
-      unit: 'cup',
+      unit: 'g',
       name: 'flour',
       note: null,
     },
@@ -151,7 +151,7 @@ describe('recipe create', () => {
       'quantityMax below quantity',
       {
         ingredients: [
-          { name: 'flour', quantity: 2, quantityMax: 1, unit: 'cup' },
+          { name: 'flour', quantity: 2, quantityMax: 1, unit: 'g' },
         ],
       },
     ],
@@ -248,13 +248,13 @@ describe('search', () => {
     await createRecipe(app, cookie, {
       title: 'Ruisleipä',
       tags: ['leipä'],
-      ingredients: [{ name: 'rye flour', quantity: 2, unit: 'cup' }],
+      ingredients: [{ name: 'rye flour', quantity: 300, unit: 'g' }],
       steps: [{ text: 'Bake.' }],
     })
     await createRecipe(app, cookie, {
       title: '100% Rye Crackers',
       tags: ['snack'],
-      ingredients: [{ name: 'rye flour', quantity: 1, unit: 'cup' }],
+      ingredients: [{ name: 'rye flour', quantity: 150, unit: 'g' }],
       steps: [{ text: 'Bake.' }],
     })
     await createRecipe(app, cookie, {
@@ -403,7 +403,7 @@ describe('tags', () => {
     await createRecipe(app, cookie, {
       title: 'Other',
       tags: ['leipä'],
-      ingredients: [{ name: 'flour', quantity: 1, unit: 'cup' }],
+      ingredients: [{ name: 'flour', quantity: 1, unit: 'g' }],
       steps: [{ text: 'Bake.' }],
     })
 
@@ -434,7 +434,7 @@ describe('recipe update and delete', () => {
         title: 'Täysin uusi nimi',
         servings: 4,
         tags: ['uusi'],
-        ingredients: [{ name: 'milk', quantity: 2, unit: 'cup' }],
+        ingredients: [{ name: 'milk', quantity: 500, unit: 'ml' }],
         steps: [{ text: 'Boil.' }],
       },
     })

@@ -24,18 +24,18 @@ const selection = (
 describe('mergeShoppingList', () => {
   it('sums the same name and unit', () => {
     const lines = mergeShoppingList([
-      selection(4, [ing({ quantity: 1, unit: 'cup', name: 'flour' })]),
-      selection(2, [ing({ quantity: 2, unit: 'cup', name: 'flour' })]),
+      selection(4, [ing({ quantity: 1, unit: 'g', name: 'flour' })]),
+      selection(2, [ing({ quantity: 2, unit: 'g', name: 'flour' })]),
     ])
     expect(lines).toEqual([
-      { name: 'flour', unit: 'cup', quantity: 3, quantityMax: null, notes: [] },
+      { name: 'flour', unit: 'g', quantity: 3, quantityMax: null, notes: [] },
     ])
   })
 
   it('scales by requested servings over recipe servings', () => {
     const lines = mergeShoppingList([
-      selection(4, [ing({ quantity: 1, unit: 'cup', name: 'flour' })], 8),
-      selection(2, [ing({ quantity: 2, unit: 'cup', name: 'flour' })]),
+      selection(4, [ing({ quantity: 1, unit: 'g', name: 'flour' })], 8),
+      selection(2, [ing({ quantity: 2, unit: 'g', name: 'flour' })]),
     ])
     expect(lines[0]?.quantity).toBe(4)
   })
@@ -60,11 +60,11 @@ describe('mergeShoppingList', () => {
 
   it('keeps different units on separate lines', () => {
     const lines = mergeShoppingList([
-      selection(4, [ing({ quantity: 1, unit: 'cup', name: 'flour' })]),
       selection(4, [ing({ quantity: 100, unit: 'g', name: 'flour' })]),
+      selection(4, [ing({ quantity: 250, unit: 'ml', name: 'flour' })]),
     ])
     expect(lines).toHaveLength(2)
-    expect(lines.map((line) => line.unit)).toEqual(['cup', 'g'])
+    expect(lines.map((line) => line.unit)).toEqual(['g', 'ml'])
   })
 
   it('marks a merged line unquantified if any entry is unquantified', () => {
@@ -88,8 +88,8 @@ describe('mergeShoppingList', () => {
 
   it('merges names case-insensitively and keeps the first spelling', () => {
     const lines = mergeShoppingList([
-      selection(4, [ing({ quantity: 1, unit: 'cup', name: 'Flour' })]),
-      selection(4, [ing({ quantity: 1, unit: 'cup', name: 'flour' })]),
+      selection(4, [ing({ quantity: 1, unit: 'g', name: 'Flour' })]),
+      selection(4, [ing({ quantity: 1, unit: 'g', name: 'flour' })]),
     ])
     expect(lines).toHaveLength(1)
     expect(lines[0]?.name).toBe('Flour')
@@ -109,13 +109,13 @@ describe('mergeShoppingList', () => {
       selection(4, [
         ing({ quantity: 1, name: 'salt' }),
         ing({ quantity: 1, name: 'garlic' }),
-        ing({ quantity: 1, unit: 'g', name: 'flour' }),
-        ing({ quantity: 1, unit: 'cup', name: 'flour' }),
+        ing({ quantity: 100, unit: 'g', name: 'flour' }),
+        ing({ quantity: 250, unit: 'ml', name: 'flour' }),
       ]),
     ])
     expect(lines.map((line) => `${line.name}/${line.unit ?? ''}`)).toEqual([
-      'flour/cup',
       'flour/g',
+      'flour/ml',
       'garlic/',
       'salt/',
     ])
@@ -127,8 +127,8 @@ describe('mergeShoppingList', () => {
 
   it('does not round merged quantities', () => {
     const lines = mergeShoppingList([
-      selection(3, [ing({ quantity: 1, unit: 'cup', name: 'milk' })]),
-      selection(3, [ing({ quantity: 1, unit: 'cup', name: 'milk' })]),
+      selection(3, [ing({ quantity: 1, unit: 'g', name: 'milk' })]),
+      selection(3, [ing({ quantity: 1, unit: 'g', name: 'milk' })]),
     ])
     expect(lines[0]?.quantity).toBe(2)
   })
@@ -137,11 +137,11 @@ describe('mergeShoppingList', () => {
 describe('renderShoppingList', () => {
   it('joins formatted lines with a trailing newline', () => {
     const text = renderShoppingList([
-      { name: 'flour', unit: 'cup', quantity: 2, quantityMax: null, notes: [] },
+      { name: 'flour', unit: 'g', quantity: 300, quantityMax: null, notes: [] },
       { name: 'garlic', unit: 'clove', quantity: 3, quantityMax: null, notes: ['minced'] },
       { name: 'salt', unit: null, quantity: null, quantityMax: null, notes: ['to taste'] },
     ])
-    expect(text).toBe('2 cups flour\n3 cloves garlic (minced)\nsalt (to taste)\n')
+    expect(text).toBe('300 g flour\n3 cloves garlic (minced)\nsalt (to taste)\n')
   })
 
   it('returns an empty string for no lines', () => {

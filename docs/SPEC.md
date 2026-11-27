@@ -38,7 +38,7 @@ Status: **agreed, buildable**. Decisions are final unless superseded by a dated 
 
 **Non-goals (v1)**
 
-URL/scraper import, meal planner, cookbooks/collections, multiple photos per recipe, unit conversion (cups ↔ grams), public/unauthenticated pages, self-service signup, email (SMTP), OIDC/SSO, i18n, JSON export, audit log, recipe scaling control on the detail page.
+URL/scraper import, meal planner, cookbooks/collections, multiple photos per recipe, unit conversion between volume and weight, public/unauthenticated pages, self-service signup, email (SMTP), OIDC/SSO, i18n, JSON export, audit log, recipe scaling control on the detail page.
 
 **v1 is done when** every one of these works against the built container:
 
@@ -301,7 +301,7 @@ Entry is one free-text line per ingredient. The server parses it into structured
 
 | Input | qty | qty_max | unit | name | note |
 |---|---|---|---|---|---|
-| `1 1/2 cups flour` | 1.5 | — | `cup` | flour | — |
+| `150 g flour` | 150 | — | `g` | flour | — |
 | `2–3 cloves garlic, minced` | 2 | 3 | `clove` | garlic | minced |
 | `½ tsp salt` | 0.5 | — | `tsp` | salt | — |
 | `400 g canned tomatoes` | 400 | — | `g` | canned tomatoes | — |
@@ -317,7 +317,7 @@ Rules
 - Optional connector `x`, `×`, or `*` between count and container (`1 x 400g tin …`).
 - **Product size rule:** when a second quantity+unit pair appears before a container word (`can, jar, packet, tin, box, bottle, bag, carton, tub`), the leading count and container become `quantity`/`unit` and the inner size pair is preserved verbatim in `note`. Nothing is discarded.
 - Trailing `, <note>` (or ` - <note>`) sets the note. `to taste`, `as needed`, `for garnish`, `for serving` with no leading quantity become the note with `quantity = NULL`.
-- Unit matching is case-insensitive, plural-insensitive, and alias-aware for: `g, kg, mg, ml, l, cl, dl, tsp, tbsp, cup, oz, lb, piece, clove, slice, sprig, pinch, dash, bunch, handful, can, jar, packet, sheet, stalk`. Aliases include `tablespoon(s)→tbsp`, `teaspoon(s)→tsp`, `gram(s)→g`, `kilogram(s)→kg`, `millilitre(s)/milliliter(s)→ml`, `litre(s)/liter(s)→l`, `tin→can`, `pkg→packet`, `stick(s)→piece`, `head(s)→piece`.
+- Unit matching is case-insensitive, plural-insensitive, and alias-aware for: `g, kg, mg, ml, l, cl, dl, tsp, tbsp, oz, lb, piece, clove, slice, sprig, pinch, dash, bunch, handful, can, jar, packet, sheet, stalk`. Aliases include `tablespoon(s)→tbsp`, `teaspoon(s)→tsp`, `gram(s)→g`, `kilogram(s)→kg`, `millilitre(s)/milliliter(s)→ml`, `litre(s)/liter(s)→l`, `tin→can`, `pkg→packet`, `stick(s)→piece`, `head(s)→piece`.
 - Unrecognized units are never guessed; the token stays in `name` and `unit` is `NULL`.
 - Names are NFC-normalized, trimmed, and whitespace-collapsed. Nothing else is stripped (`tomato` ≠ `tomatoes`).
 - The parser must never throw. Unparseable input yields `{ quantity: null, quantityMax: null, unit: null, name: <whole trimmed input>, note: null }`.
@@ -333,7 +333,7 @@ Rules
 - Otherwise round to 2 decimals and trim trailing zeros.
 - Ranges render `min–max` (en dash) only when the values differ.
 
-Unit display: canonical singular token; pluralized with `-s`/`-es` (matching the token's normal plural) when the rendered quantity is not exactly 1. Display forms are `g, kg, mg, ml, l, cl, dl, tsp, tbsp, cup(s), oz, lb, piece(s), clove(s), slice(s), sprig(s), pinch(es), dash(es), bunch(es), handful(s), can(s), jar(s), packet(s), sheet(s), stalk(s)`.
+Unit display: canonical singular token; pluralized with `-s`/`-es` (matching the token's normal plural) when the rendered quantity is not exactly 1. Display forms are `g, kg, mg, ml, l, cl, dl, tsp, tbsp, oz, lb, piece(s), clove(s), slice(s), sprig(s), pinch(es), dash(es), bunch(es), handful(s), can(s), jar(s), packet(s), sheet(s), stalk(s)`.
 
 ---
 
@@ -355,7 +355,7 @@ Response
 
 ```json
 {
-  "text": "2 cups flour\n3 cloves garlic (minced)\n1 tsp salt\nsalt (to taste)\n400 g canned tomatoes\n",
+  "text": "300 g flour\n3 cloves garlic (minced)\n1 tsp salt\nsalt (to taste)\n400 g canned tomatoes\n",
   "lines": [
     { "name": "canned tomatoes", "unit": "g", "quantity": 400, "quantityMax": null, "notes": [] }
   ]
@@ -475,8 +475,8 @@ Request body (create and replace):
   "notes": "Freezes well.",
   "tags": ["bread", "finnish"],
   "ingredients": [
-    { "section": null, "rawText": "1 1/2 cups flour",
-      "quantity": 1.5, "quantityMax": null, "unit": "cup", "name": "flour", "note": null },
+    { "section": null, "rawText": "150 g flour",
+      "quantity": 150, "quantityMax": null, "unit": "g", "name": "flour", "note": null },
     { "section": "For the topping", "rawText": "2-3 cloves garlic, minced",
       "quantity": 2, "quantityMax": 3, "unit": "clove", "name": "garlic", "note": "minced" }
   ],
@@ -738,6 +738,8 @@ Clarifications added on the readiness review (same date):
 - Personal API tokens (`migrations/0002_api_tokens.sql`) were added after v1: bearer resolution runs before the CSRF check, expiry and disabled-user state are checked per request, and the rate-limit key is a hash of the `Authorization` header.
 - `mcp/` is a separate stdio process, not part of the server image. It authenticates with a personal token from `HERRKU_URL`/`HERRKU_TOKEN` and exposes six thin tools against the same REST API; `npm run smoke:mcp` exercises it end to end.
 - better-sqlite3 13 has no prebuilt binary, so the image compiles it in the builder stage (Python/make/g++) and copies the pruned `node_modules` into a toolchain-free runtime stage.
+- Units are metric-first: `cup` was removed from the canonical token set; the list is `g, kg, mg, ml, l, cl, dl, tsp, tbsp, oz, lb` plus countables. Seed data, examples and tests use grams and millilitres.
+- The SPA serves an in-app reference at `/help` covering personal tokens, the endpoint map and MCP setup.
 
 ## 18. Deferred (not open, just later)
 

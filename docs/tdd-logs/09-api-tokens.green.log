@@ -1,11 +1,11 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ✓ server/test/tokens.test.ts (11 tests) 506ms
+ ✓ server/test/tokens.test.ts (11 tests) 521ms
 
  Test Files  1 passed (1)
       Tests  11 passed (11)
-   Start at  19:18:58
-   Duration  1.28s (transform 141ms, setup 0ms, collect 395ms, tests 506ms, environment 0ms, prepare 49ms)
+   Start at  19:51:57
+   Duration  1.26s (transform 140ms, setup 0ms, collect 402ms, tests 521ms, environment 0ms, prepare 73ms)
 
 

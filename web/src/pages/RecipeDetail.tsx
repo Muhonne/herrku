@@ -35,7 +35,7 @@ function StepList({ steps }: { steps: RecipeStep[] }): React.ReactNode {
       {groups.map((group, index) => (
         <div key={`${group.section ?? 'steps'}-${index}`}>
           {group.section ? (
-            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-stone-500">
+            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
               {group.section}
             </h3>
           ) : null}
@@ -44,10 +44,10 @@ function StepList({ steps }: { steps: RecipeStep[] }): React.ReactNode {
               counter += 1
               return (
                 <li key={stepIndex} className="flex gap-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-semibold text-emerald-900">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] text-xs font-semibold text-[var(--accent-bright)]">
                     {counter}
                   </span>
-                  <p className="whitespace-pre-line text-sm leading-relaxed text-stone-800">{step.text}</p>
+                  <p className="whitespace-pre-line text-sm leading-relaxed text-[var(--text)]">{step.text}</p>
                 </li>
               )
             })}
@@ -78,7 +78,7 @@ export default function RecipeDetailPage(): React.ReactNode {
     return (
       <div className="space-y-4">
         <ErrorBox message="That recipe could not be loaded." />
-        <Link to="/recipes" className="text-sm font-medium text-emerald-800 hover:underline">
+        <Link to="/recipes" className="text-sm font-medium text-[var(--accent)] hover:underline">
           Back to recipes
         </Link>
       </div>
@@ -96,11 +96,11 @@ export default function RecipeDetailPage(): React.ReactNode {
     <article className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <Link to="/recipes" className="text-sm text-stone-500 hover:underline">
+          <Link to="/recipes" className="text-sm text-[var(--muted)] hover:underline">
             ← Recipes
           </Link>
           <h1 className="mt-1 text-3xl font-semibold tracking-tight">{data.title}</h1>
-          <p className="mt-1 text-sm text-stone-500">
+          <p className="mt-1 text-sm text-[var(--muted)]">
             by {data.createdBy.displayName} · updated {formatDate(data.updatedAt)}
           </p>
         </div>
@@ -128,9 +128,9 @@ export default function RecipeDetailPage(): React.ReactNode {
         />
       ) : null}
 
-      {data.description ? <p className="text-stone-700">{data.description}</p> : null}
+      {data.description ? <p className="text-[var(--text-soft)]">{data.description}</p> : null}
 
-      <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone-600">
+      <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--muted)]">
         {data.servings ? <span>{data.servings} servings</span> : null}
         {data.prepMinutes !== null ? <span>Prep {formatMinutes(data.prepMinutes)}</span> : null}
         {data.cookMinutes !== null ? <span>Cook {formatMinutes(data.cookMinutes)}</span> : null}
@@ -140,7 +140,7 @@ export default function RecipeDetailPage(): React.ReactNode {
       {data.tags.length > 0 ? (
         <div className="flex flex-wrap gap-2">
           {data.tags.map((tag) => (
-            <span key={tag} className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs text-emerald-900">
+            <span key={tag} className="rounded-full bg-[var(--accent-soft)] px-2.5 py-1 text-xs text-[var(--accent-bright)]">
               {tag}
             </span>
           ))}
@@ -151,19 +151,19 @@ export default function RecipeDetailPage(): React.ReactNode {
         <Card className="lg:col-span-2">
           <h2 className="mb-4 text-lg font-semibold">Ingredients</h2>
           {data.ingredients.length === 0 ? (
-            <p className="text-sm text-stone-500">No ingredients recorded.</p>
+            <p className="text-sm text-[var(--muted)]">No ingredients recorded.</p>
           ) : (
             <div className="space-y-4">
               {ingredientGroups.map((group, index) => (
                 <div key={`${group.section ?? 'ingredients'}-${index}`}>
                   {group.section ? (
-                    <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-stone-500">
+                    <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
                       {group.section}
                     </h3>
                   ) : null}
                   <ul className="space-y-1.5">
                     {group.items.map((ingredient, ingredientIndex) => (
-                      <li key={ingredientIndex} className="text-sm text-stone-800">
+                      <li key={ingredientIndex} className="text-sm text-[var(--text)]">
                         {ingredientText(ingredient)}
                       </li>
                     ))}
@@ -177,7 +177,7 @@ export default function RecipeDetailPage(): React.ReactNode {
         <Card className="lg:col-span-3">
           <h2 className="mb-4 text-lg font-semibold">Method</h2>
           {data.steps.length === 0 ? (
-            <p className="text-sm text-stone-500">No steps recorded.</p>
+            <p className="text-sm text-[var(--muted)]">No steps recorded.</p>
           ) : (
             <StepList steps={data.steps} />
           )}
@@ -187,18 +187,18 @@ export default function RecipeDetailPage(): React.ReactNode {
       {data.notes ? (
         <Card>
           <h2 className="mb-2 text-lg font-semibold">Notes</h2>
-          <p className="whitespace-pre-line text-sm text-stone-700">{data.notes}</p>
+          <p className="whitespace-pre-line text-sm text-[var(--text-soft)]">{data.notes}</p>
         </Card>
       ) : null}
 
       {data.sourceUrl ? (
-        <p className="text-sm text-stone-600">
+        <p className="text-sm text-[var(--muted)]">
           Source:{' '}
           <a
             href={data.sourceUrl}
             target="_blank"
             rel="noreferrer noopener"
-            className="text-emerald-800 hover:underline"
+            className="text-[var(--accent)] hover:underline"
           >
             {data.sourceUrl}
           </a>

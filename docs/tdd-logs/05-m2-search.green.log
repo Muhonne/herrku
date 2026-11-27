@@ -1,11 +1,11 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ✓ server/test/recipes.test.ts (26 tests) 872ms
+ ✓ server/test/recipes.test.ts (26 tests) 884ms
 
  Test Files  1 passed (1)
       Tests  26 passed (26)
-   Start at  19:18:42
-   Duration  1.63s (transform 160ms, setup 0ms, collect 414ms, tests 872ms, environment 0ms, prepare 55ms)
+   Start at  19:51:43
+   Duration  1.62s (transform 139ms, setup 0ms, collect 398ms, tests 884ms, environment 0ms, prepare 51ms)
 
 

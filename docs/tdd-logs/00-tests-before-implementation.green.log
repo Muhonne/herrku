@@ -1,16 +1,16 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ✓ shared/test/search-text.test.ts (4 tests) 2ms
- ✓ shared/test/slug.test.ts (11 tests) 3ms
- ✓ shared/test/format.test.ts (26 tests) 7ms
- ✓ shared/test/units.test.ts (71 tests) 8ms
- ✓ shared/test/merge.test.ts (14 tests) 15ms
- ✓ shared/test/parser.test.ts (25 tests) 9ms
+ ✓ shared/test/search-text.test.ts (4 tests) 4ms
+ ✓ shared/test/parser.test.ts (25 tests) 12ms
+ ✓ shared/test/slug.test.ts (11 tests) 5ms
+ ✓ shared/test/merge.test.ts (14 tests) 13ms
+ ✓ shared/test/units.test.ts (66 tests) 15ms
+ ✓ shared/test/format.test.ts (26 tests) 5ms
 
  Test Files  6 passed (6)
-      Tests  151 passed (151)
-   Start at  19:18:27
-   Duration  522ms (transform 181ms, setup 0ms, collect 855ms, tests 45ms, environment 1ms, prepare 502ms)
+      Tests  146 passed (146)
+   Start at  19:51:28
+   Duration  470ms (transform 257ms, setup 0ms, collect 936ms, tests 55ms, environment 1ms, prepare 390ms)
 
 

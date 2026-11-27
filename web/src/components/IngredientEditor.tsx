@@ -92,7 +92,7 @@ export function IngredientEditor({
   return (
     <div className="space-y-3">
       {ingredients.map((ingredient, index) => (
-        <div key={index} className="rounded-lg border border-stone-200 bg-stone-50/60 p-3">
+        <div key={index} className="rounded-lg border border-[var(--line)] bg-[var(--surface-2)] p-3">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-12">
             <div className="col-span-2 sm:col-span-3">
               <span className={labelClass}>Group</span>
@@ -108,7 +108,7 @@ export function IngredientEditor({
               <span className={labelClass}>Raw line</span>
               <Input
                 aria-label={`Ingredient ${index + 1} raw line`}
-                placeholder="1 1/2 cups flour"
+                placeholder="150 g flour"
                 maxLength={500}
                 value={ingredient.rawText}
                 onChange={(event) => update(index, { rawText: event.target.value })}

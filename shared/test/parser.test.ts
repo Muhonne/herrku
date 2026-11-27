@@ -6,8 +6,8 @@ type Case = [input: string, expected: ParsedIngredient]
 
 const cases: Case[] = [
   [
-    '1 1/2 cups flour',
-    { quantity: 1.5, quantityMax: null, unit: 'cup', name: 'flour', note: null },
+    '150 g flour',
+    { quantity: 150, quantityMax: null, unit: 'g', name: 'flour', note: null },
   ],
   [
     '2–3 cloves garlic, minced',
@@ -35,7 +35,7 @@ const cases: Case[] = [
     '1 (400 g) tin chickpeas',
     { quantity: 1, quantityMax: null, unit: 'can', name: 'chickpeas', note: '400 g' },
   ],
-  ['1/2 cup milk', { quantity: 0.5, quantityMax: null, unit: 'cup', name: 'milk', note: null }],
+  ['200 ml milk', { quantity: 200, quantityMax: null, unit: 'ml', name: 'milk', note: null }],
   ['1½ tbsp sugar', { quantity: 1.5, quantityMax: null, unit: 'tbsp', name: 'sugar', note: null }],
   [
     '2 to 3 cloves garlic',
@@ -63,8 +63,8 @@ const cases: Case[] = [
     { quantity: 1, quantityMax: null, unit: null, name: 'scoop protein powder', note: null },
   ],
   [
-    '2 cups flour',
-    { quantity: 2, quantityMax: null, unit: 'cup', name: 'flour', note: null },
+    '300 g flour',
+    { quantity: 300, quantityMax: null, unit: 'g', name: 'flour', note: null },
   ],
 ]
 
@@ -75,14 +75,14 @@ describe('parseIngredient', () => {
 
   it('never throws on malformed input', () => {
     const malformed = [
-      '1/0 cup sugar',
-      '-1 cup sugar',
+      '1/0 g sugar',
+      '-1 g sugar',
       '2-3-4 apples',
       '½½½',
-      '1 1/1 cups',
+      '1 1/1 g',
       'x'.repeat(500),
       ',,,',
-      '1 cup, ,',
+      '1 g, ,',
       '0 g',
     ]
     for (const input of malformed) {
@@ -91,11 +91,11 @@ describe('parseIngredient', () => {
   })
 
   it('falls back to the whole text when a quantity parse leaves a broken name', () => {
-    expect(parseIngredient('1/0 cup sugar')).toEqual({
+    expect(parseIngredient('1/0 g sugar')).toEqual({
       quantity: null,
       quantityMax: null,
       unit: null,
-      name: '1/0 cup sugar',
+      name: '1/0 g sugar',
       note: null,
     })
     expect(parseIngredient('2-3-4 apples')).toEqual({
@@ -105,14 +105,14 @@ describe('parseIngredient', () => {
       name: '2-3-4 apples',
       note: null,
     })
-    expect(parseIngredient('-1 cup sugar').quantity).toBeNull()
+    expect(parseIngredient('-1 g sugar').quantity).toBeNull()
   })
 
   it('normalizes whitespace and unicode', () => {
-    expect(parseIngredient('  2   cups   flour  ')).toEqual({
+    expect(parseIngredient('  2   g   flour  ')).toEqual({
       quantity: 2,
       quantityMax: null,
-      unit: 'cup',
+      unit: 'g',
       name: 'flour',
       note: null,
     })

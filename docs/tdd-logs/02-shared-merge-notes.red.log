@@ -1,27 +1,27 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ shared/test/merge.test.ts (14 tests | 1 failed) 17ms
-   ✓ mergeShoppingList > sums the same name and unit 1ms
+ ❯ shared/test/merge.test.ts (14 tests | 1 failed) 18ms
+   ✓ mergeShoppingList > sums the same name and unit 2ms
    ✓ mergeShoppingList > scales by requested servings over recipe servings 0ms
    ✓ mergeShoppingList > treats a missing recipe servings or requested servings as multiplier 1 0ms
    ✓ mergeShoppingList > adds ranges min to min and max to max 0ms
-   ✓ mergeShoppingList > keeps different units on separate lines 5ms
+   ✓ mergeShoppingList > keeps different units on separate lines 4ms
    ✓ mergeShoppingList > marks a merged line unquantified if any entry is unquantified 0ms
-   × mergeShoppingList > dedupes notes case-insensitively and keeps the first spelling 6ms
+   × mergeShoppingList > dedupes notes case-insensitively and keeps the first spelling 8ms
      → expected [ 'Minced', 'minced', 'divided' ] to deeply equal [ 'Minced', 'divided' ]
    ✓ mergeShoppingList > merges names case-insensitively and keeps the first spelling 0ms
    ✓ mergeShoppingList > collapses whitespace and normalizes unicode for keys 0ms
    ✓ mergeShoppingList > sorts by name and then unit, independent of selection order 0ms
    ✓ mergeShoppingList > returns an empty list for no selections 0ms
-   ✓ mergeShoppingList > does not round merged quantities 1ms
-   ✓ renderShoppingList > joins formatted lines with a trailing newline 1ms
+   ✓ mergeShoppingList > does not round merged quantities 0ms
+   ✓ renderShoppingList > joins formatted lines with a trailing newline 0ms
    ✓ renderShoppingList > returns an empty string for no lines 0ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 13 passed (14)
-   Start at  19:18:30
-   Duration  540ms (transform 70ms, setup 0ms, collect 125ms, tests 17ms, environment 0ms, prepare 67ms)
+   Start at  19:51:30
+   Duration  453ms (transform 65ms, setup 0ms, collect 117ms, tests 18ms, environment 0ms, prepare 48ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯

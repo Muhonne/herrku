@@ -1,42 +1,42 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/auth.test.ts (28 tests | 2 failed) 1044ms
-   ✓ bootstrap > creates the first admin from env vars 101ms
-   ✓ bootstrap > does not create a second admin on the next boot 26ms
-   ✓ login > signs in with valid credentials 49ms
-   × login > returns the same generic error for a wrong password and an unknown user 54ms
+ ❯ server/test/auth.test.ts (28 tests | 2 failed) 1087ms
+   ✓ bootstrap > creates the first admin from env vars 107ms
+   ✓ bootstrap > does not create a second admin on the next boot 30ms
+   ✓ login > signs in with valid credentials 53ms
+   × login > returns the same generic error for a wrong password and an unknown user 59ms
      → expected 200 to be 401 // Object.is equality
-   ✓ login > sets HttpOnly, SameSite=Lax and Path=/ on the cookie 29ms
-   ✓ login > uses the __Host- prefixed cookie name when secure 31ms
-   ✓ login > honours staySignedIn by toggling cookie persistence 36ms
+   ✓ login > sets HttpOnly, SameSite=Lax and Path=/ on the cookie 30ms
+   ✓ login > uses the __Host- prefixed cookie name when secure 30ms
+   ✓ login > honours staySignedIn by toggling cookie persistence 40ms
    ✓ me and logout > requires a session 20ms
-   ✓ me and logout > returns the current user 31ms
-   ✓ me and logout > invalidates the session on logout 45ms
-   ✓ me and logout > refreshes a stale session on use 28ms
-   ✓ me and logout > lists and revokes sessions 34ms
-   ✓ invites > runs the full invite flow 48ms
-   ✓ invites > rejects a used invite 45ms
-   ✓ invites > rejects an expired invite 27ms
-   ✓ invites > rejects an unknown invite token 20ms
-   ✓ invites > rejects a taken username with 409 31ms
-   ✓ invites > honours the requested role 33ms
-   ✓ password change and reset > revokes other sessions but keeps the current one 49ms
-   ✓ password change and reset > rejects a wrong current password 38ms
-   ✓ password change and reset > issues a reset link that sets a new password and revokes sessions 64ms
-   ✓ csrf > rejects a mutating request without an origin 21ms
+   ✓ me and logout > returns the current user 33ms
+   ✓ me and logout > invalidates the session on logout 35ms
+   ✓ me and logout > refreshes a stale session on use 35ms
+   ✓ me and logout > lists and revokes sessions 44ms
+   ✓ invites > runs the full invite flow 53ms
+   ✓ invites > rejects a used invite 33ms
+   ✓ invites > rejects an expired invite 29ms
+   ✓ invites > rejects an unknown invite token 18ms
+   ✓ invites > rejects a taken username with 409 39ms
+   ✓ invites > honours the requested role 35ms
+   ✓ password change and reset > revokes other sessions but keeps the current one 55ms
+   ✓ password change and reset > rejects a wrong current password 33ms
+   ✓ password change and reset > issues a reset link that sets a new password and revokes sessions 68ms
+   ✓ csrf > rejects a mutating request without an origin 15ms
    ✓ csrf > rejects a foreign origin 16ms
-   ✓ csrf > accepts a referer fallback when origin is absent 21ms
-   × rate limiting > returns 429 with Retry-After after too many login attempts 25ms
+   ✓ csrf > accepts a referer fallback when origin is absent 25ms
+   × rate limiting > returns 429 with Retry-After after too many login attempts 28ms
      → expected 200 to be 401 // Object.is equality
-   ✓ disabled accounts > rejects live sessions once the user is disabled 45ms
-   ✓ disabled accounts > refuses to disable the last admin 24ms
-   ✓ disabled accounts > promotes a member to admin with immediate effect 52ms
+   ✓ disabled accounts > rejects live sessions once the user is disabled 46ms
+   ✓ disabled accounts > refuses to disable the last admin 29ms
+   ✓ disabled accounts > promotes a member to admin with immediate effect 46ms
 
  Test Files  1 failed (1)
       Tests  2 failed | 26 passed (28)
-   Start at  19:18:35
-   Duration  1.88s (transform 193ms, setup 0ms, collect 447ms, tests 1.04s, environment 0ms, prepare 92ms)
+   Start at  19:51:35
+   Duration  1.91s (transform 197ms, setup 0ms, collect 451ms, tests 1.09s, environment 0ms, prepare 77ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯

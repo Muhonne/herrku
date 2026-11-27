@@ -34,7 +34,7 @@ export function ImageDropzone({
       {shown ? (
         <img src={shown} alt="" className="max-h-64 w-full rounded-lg object-cover" />
       ) : (
-        <div className="flex h-40 items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-400">
+        <div className="flex h-40 items-center justify-center rounded-lg border border-dashed border-[var(--line-strong)] bg-[var(--bg)] text-sm text-[var(--muted)]">
           No photo
         </div>
       )}
@@ -45,7 +45,7 @@ export function ImageDropzone({
           type="file"
           aria-label="Photo"
           accept="image/jpeg,image/png,image/webp"
-          className="text-sm text-stone-600 file:mr-3 file:rounded-lg file:border-0 file:bg-stone-200 file:px-3 file:py-1.5 file:text-sm file:font-medium hover:file:bg-stone-300"
+          className="text-sm text-[var(--muted)] file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--surface-3)] file:px-3 file:py-1.5 file:text-sm file:font-medium hover:file:bg-[var(--surface-3)]"
           onChange={(event) => {
             const selected = event.target.files?.[0] ?? null
             onChange(selected)
@@ -69,7 +69,7 @@ export function ImageDropzone({
           </Button>
         ) : null}
       </div>
-      <p className="text-xs text-stone-500">JPEG, PNG or WebP, up to 5 MB.</p>
+      <p className="text-xs text-[var(--muted)]">JPEG, PNG or WebP, up to 5 MB.</p>
     </div>
   )
 }

@@ -204,7 +204,7 @@ if (recipeCount === 0) {
     tags: ['leipä', 'baking'],
     notes: 'Freezes well.',
     ingredients: [
-      { quantity: 1.5, unit: 'cup', name: 'flour', rawText: '1 1/2 cups flour' },
+      { quantity: 400, unit: 'g', name: 'flour', rawText: '400 g flour' },
       { quantity: 2, quantityMax: 3, unit: 'clove', name: 'garlic', note: 'minced' },
       { quantity: null, name: 'salt', note: 'to taste' },
     ],
@@ -225,7 +225,7 @@ if (recipeCount === 0) {
     ingredients: [
       { quantity: 400, unit: 'g', name: 'canned tomatoes' },
       { quantity: 1, unit: 'piece', name: 'onion' },
-      { quantity: 2, unit: 'cup', name: 'stock' },
+      { quantity: 500, unit: 'ml', name: 'stock' },
     ],
     steps: [{ text: 'Simmer everything for 30 minutes.' }, { text: 'Blend and season.' }],
   })
@@ -236,8 +236,8 @@ if (recipeCount === 0) {
     servings: 6,
     tags: ['leipä'],
     ingredients: [
-      { quantity: 2, unit: 'cup', name: 'rye flour' },
-      { quantity: 1, unit: 'cup', name: 'water' },
+      { quantity: 300, unit: 'g', name: 'rye flour' },
+      { quantity: 250, unit: 'ml', name: 'water' },
     ],
     steps: [{ text: 'Knead, prove, bake.' }],
   })

@@ -32,7 +32,7 @@ const pasta = {
   title: 'Pasta',
   servings: 4,
   ingredients: [
-    { name: 'flour', quantity: 1, unit: 'cup' },
+    { name: 'flour', quantity: 200, unit: 'g' },
     { name: 'salt', note: 'to taste' },
     { name: 'garlic', quantity: 2, quantityMax: 3, unit: 'clove', section: 'For the sauce' },
   ],
@@ -43,7 +43,7 @@ const bread = {
   title: 'Bread',
   servings: 2,
   ingredients: [
-    { name: 'Flour', quantity: 2, unit: 'cup' },
+    { name: 'Flour', quantity: 300, unit: 'g' },
     { name: 'garlic', quantity: 1, quantityMax: 2, unit: 'clove', note: 'Minced' },
     { name: 'salt', quantity: 1, unit: 'tsp' },
   ],
@@ -72,10 +72,10 @@ describe('POST /api/shopping-list', () => {
     expect(response.statusCode).toBe(200)
     const body = response.json()
     expect(body.text).toBe(
-      '4 cups flour\n5–8 cloves garlic (Minced)\nsalt (to taste)\n1 tsp salt\n',
+      '700 g flour\n5–8 cloves garlic (Minced)\nsalt (to taste)\n1 tsp salt\n',
     )
     expect(body.lines).toEqual([
-      { name: 'flour', unit: 'cup', quantity: 4, quantityMax: null, notes: [] },
+      { name: 'flour', unit: 'g', quantity: 700, quantityMax: null, notes: [] },
       { name: 'garlic', unit: 'clove', quantity: 5, quantityMax: 8, notes: ['Minced'] },
       { name: 'salt', unit: null, quantity: null, quantityMax: null, notes: ['to taste'] },
       { name: 'salt', unit: 'tsp', quantity: 1, quantityMax: null, notes: [] },
@@ -87,7 +87,7 @@ describe('POST /api/shopping-list', () => {
     const cookie = await loginAs(app)
     const recipe = await createRecipe(app, cookie, {
       title: 'No yield',
-      ingredients: [{ name: 'oats', quantity: 2, unit: 'cup' }],
+      ingredients: [{ name: 'oats', quantity: 200, unit: 'g' }],
       steps: [{ text: 'Mix.' }],
     })
 
@@ -98,7 +98,7 @@ describe('POST /api/shopping-list', () => {
       payload: { items: [{ recipeId: recipe.id, servings: 10 }] },
     })
 
-    expect(response.json().lines[0]).toMatchObject({ name: 'oats', quantity: 2 })
+    expect(response.json().lines[0]).toMatchObject({ name: 'oats', quantity: 200 })
   })
 
   it('rejects an empty selection with 400', async () => {

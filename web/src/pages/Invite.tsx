@@ -55,8 +55,8 @@ export default function InvitePage(): React.ReactNode {
       <div className="flex min-h-full items-center justify-center px-4 py-16">
         <Card className="w-full max-w-sm text-center">
           <h1 className="text-lg font-semibold">Invite unavailable</h1>
-          <p className="mt-2 text-sm text-stone-600">{message}</p>
-          <Link to="/login" className="mt-4 inline-block text-sm font-medium text-emerald-800 hover:underline">
+          <p className="mt-2 text-sm text-[var(--muted)]">{message}</p>
+          <Link to="/login" className="mt-4 inline-block text-sm font-medium text-[var(--accent)] hover:underline">
             Back to sign in
           </Link>
         </Card>
@@ -75,11 +75,11 @@ export default function InvitePage(): React.ReactNode {
           {isReset ? 'Set a new password' : 'Create your account'}
         </h1>
         {isReset && info.data.username ? (
-          <p className="mt-1 text-sm text-stone-600">
+          <p className="mt-1 text-sm text-[var(--muted)]">
             for <span className="font-medium">{info.data.username}</span>
           </p>
         ) : (
-          <p className="mt-1 text-sm text-stone-500">You are joining herrku.</p>
+          <p className="mt-1 text-sm text-[var(--muted)]">You are joining herrku.</p>
         )}
 
         <form

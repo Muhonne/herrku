@@ -5,19 +5,19 @@
 
 Running 1 test using 1 worker
 
-  ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (817ms)
+  ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (1.8s)
 
 
   1) [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list 
 
     Error: expect(received).toContain(expected) // indexOf
 
-    Expected substring: "2 cups flour"
+    Expected substring: "200 g flour"
     Received string:    ""
 
       45 |
       46 |   const clipboard = await page.evaluate(() => navigator.clipboard.readText())
-    > 47 |   expect(clipboard).toContain('2 cups flour')
+    > 47 |   expect(clipboard).toContain('200 g flour')
          |                     ^
       48 | })
       49 |

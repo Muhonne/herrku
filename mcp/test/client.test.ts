@@ -74,7 +74,7 @@ describe('HerrkuClient', () => {
       body: { slug: 'new-loaf' },
     }))
     const api = client(fetchImpl)
-    const payload = { title: 'New Loaf', ingredients: [{ rawText: '2 cups flour' }] }
+    const payload = { title: 'New Loaf', ingredients: [{ rawText: '200 g flour' }] }
 
     await api.createRecipe(payload)
     expect(calls[0]?.init.method).toBe('POST')
@@ -88,7 +88,7 @@ describe('HerrkuClient', () => {
   })
 
   it('posts shopping list selections', async () => {
-    const { calls, fetchImpl } = stubFetch(() => ({ body: { text: '1 cup flour\n', lines: [] } }))
+    const { calls, fetchImpl } = stubFetch(() => ({ body: { text: '200 g flour\n', lines: [] } }))
     const result = await client(fetchImpl).shoppingList([{ recipeId: 3, servings: 8 }])
 
     expect(calls[0]?.init.method).toBe('POST')
@@ -96,7 +96,7 @@ describe('HerrkuClient', () => {
     expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
       items: [{ recipeId: 3, servings: 8 }],
     })
-    expect(result.text).toBe('1 cup flour\n')
+    expect(result.text).toBe('200 g flour\n')
   })
 
   it('maps API errors to HerrkuError', async () => {

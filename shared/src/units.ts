@@ -8,7 +8,6 @@ export const UNIT_TOKENS = [
   'dl',
   'tsp',
   'tbsp',
-  'cup',
   'oz',
   'lb',
   'piece',
@@ -43,7 +42,6 @@ add('cl', 'cl', 'centilitre', 'centilitres', 'centiliter', 'centiliters')
 add('dl', 'dl', 'decilitre', 'decilitres', 'deciliter', 'deciliters')
 add('tsp', 'tsp', 'teaspoon', 'teaspoons', 'ts')
 add('tbsp', 'tbsp', 'tablespoon', 'tablespoons', 'tbs')
-add('cup', 'cup', 'cups')
 add('oz', 'oz', 'ounce', 'ounces')
 add('lb', 'lb', 'lbs', 'pound', 'pounds')
 add('piece', 'piece', 'pieces', 'pc', 'pcs', 'stick', 'sticks', 'head', 'heads')
@@ -66,7 +64,6 @@ export function matchUnit(token: string): Unit | null {
 }
 
 const PLURALS: Partial<Record<Unit, string>> = {
-  cup: 'cups',
   piece: 'pieces',
   clove: 'cloves',
   slice: 'slices',

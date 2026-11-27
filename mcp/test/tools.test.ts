@@ -112,7 +112,7 @@ describe('herrku MCP tools', () => {
           title: 'Agent Loaf',
           servings: 4,
           tags: ['agent'],
-          ingredients: [{ rawText: '2 cups flour' }],
+          ingredients: [{ rawText: '200 g flour' }],
           steps: [{ text: 'Bake.' }],
         },
       })
@@ -137,7 +137,7 @@ describe('herrku MCP tools', () => {
   it('lists tags and builds a shopping list', async () => {
     const { fetchImpl } = stubFetch((url) => {
       if (url.includes('/api/tags')) return { body: { tags: [{ tag: 'soup', count: 2 }] } }
-      return { body: { text: '2 cups flour\n', lines: [] } }
+      return { body: { text: '200 g flour\n', lines: [] } }
     })
     const connection = await connect(fetchImpl)
     try {
@@ -156,7 +156,7 @@ describe('herrku MCP tools', () => {
           }),
         ),
       )
-      expect(shopping.text).toBe('2 cups flour\n')
+      expect(shopping.text).toBe('200 g flour\n')
     } finally {
       await connection.close()
     }

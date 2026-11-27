@@ -1,12 +1,12 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ✓ mcp/test/client.test.ts (7 tests) 11ms
- ✓ mcp/test/tools.test.ts (6 tests) 39ms
+ ✓ mcp/test/client.test.ts (7 tests) 7ms
+ ✓ mcp/test/tools.test.ts (6 tests) 43ms
 
  Test Files  2 passed (2)
       Tests  13 passed (13)
-   Start at  19:19:01
-   Duration  538ms (transform 90ms, setup 0ms, collect 220ms, tests 50ms, environment 0ms, prepare 107ms)
+   Start at  19:52:00
+   Duration  496ms (transform 101ms, setup 0ms, collect 228ms, tests 50ms, environment 0ms, prepare 110ms)
 
 

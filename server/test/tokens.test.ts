@@ -28,7 +28,7 @@ async function setup(): Promise<TestApp> {
 const recipePayload = {
   title: 'Token Bread',
   servings: 4,
-  ingredients: [{ rawText: '2 cups flour' }],
+  ingredients: [{ rawText: '200 g flour' }],
   steps: [{ text: 'Bake.' }],
 }
 

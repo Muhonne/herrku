@@ -85,7 +85,7 @@ async function main(): Promise<void> {
       arguments: {
         title: 'MCP Smoke Bread',
         servings: 2,
-        ingredients: [{ rawText: '1 cup flour' }, { rawText: '1 tsp salt' }],
+        ingredients: [{ rawText: '200 g flour' }, { rawText: '1 tsp salt' }],
         steps: [{ text: 'Mix and bake.' }],
       },
     })

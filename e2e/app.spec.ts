@@ -17,9 +17,9 @@ test('creates a recipe, finds it by search, and copies a shopping list', async (
   await page.getByLabel('Servings').fill('4')
 
   const raw = page.getByLabel('Ingredient 1 raw line')
-  await raw.fill('2 cups flour')
+  await raw.fill('200 g flour')
   await raw.blur()
-  await expect(page.getByLabel('Ingredient 1 unit')).toHaveValue('cup')
+  await expect(page.getByLabel('Ingredient 1 unit')).toHaveValue('g')
   await expect(page.getByLabel('Ingredient 1 name')).toHaveValue('flour')
 
   await page.getByLabel('Add tag').fill('breakfast')
@@ -28,7 +28,7 @@ test('creates a recipe, finds it by search, and copies a shopping list', async (
 
   await page.getByRole('button', { name: 'Create recipe' }).click()
   await expect(page.getByRole('heading', { name: 'E2E Pancakes' })).toBeVisible()
-  await expect(page.getByText('2 cups flour')).toBeVisible()
+  await expect(page.getByText('200 g flour')).toBeVisible()
 
   await page.getByRole('link', { name: 'Recipes', exact: true }).click()
   await page.getByLabel('Search recipes').fill('pancake')
@@ -39,12 +39,12 @@ test('creates a recipe, finds it by search, and copies a shopping list', async (
   await pancakes.click()
   await expect(pancakes).toBeChecked()
   const preview = page.getByLabel('Shopping list text')
-  await expect(preview).toHaveValue(/2 cups flour/)
+  await expect(preview).toHaveValue(/200 g flour/)
   await page.getByRole('button', { name: 'Copy' }).click()
   await expect(page.getByRole('status')).toHaveText('Shopping list copied')
 
   const clipboard = await page.evaluate(() => navigator.clipboard.readText())
-  expect(clipboard).toContain('2 cups flour')
+  expect(clipboard).toContain('200 g flour')
 })
 
 test('admin invites a new member who can sign in and read the shared library', async ({
@@ -97,6 +97,16 @@ test('falls back to manual copy when the clipboard api is unavailable', async ({
   await expect(page.getByRole('status')).toHaveText(
     'Copy failed — select the text and copy manually',
   )
+})
+
+test('help page documents tokens and the MCP server', async ({ page }) => {
+  await signIn(page, 'admin', 'admin-password-123')
+  await page.getByRole('link', { name: 'Help' }).click()
+
+  await expect(page.getByRole('heading', { name: 'API and MCP' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Personal API tokens' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'MCP server' })).toBeVisible()
+  await expect(page.getByText('HERRKU_TOKEN', { exact: true })).toBeVisible()
 })
 
 test('creates a personal API token in the UI and uses it with bearer auth', async ({

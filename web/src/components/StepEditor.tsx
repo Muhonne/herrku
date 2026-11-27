@@ -30,9 +30,9 @@ export function StepEditor({
   return (
     <div className="space-y-3">
       {steps.map((step, index) => (
-        <div key={index} className="rounded-lg border border-stone-200 bg-stone-50/60 p-3">
+        <div key={index} className="rounded-lg border border-[var(--line)] bg-[var(--surface-2)] p-3">
           <div className="flex items-start gap-2">
-            <span className="mt-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-semibold text-emerald-900">
+            <span className="mt-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] text-xs font-semibold text-[var(--accent-bright)]">
               {index + 1}
             </span>
             <div className="flex-1 space-y-2">

@@ -145,7 +145,7 @@ export default function RecipeFormPage(): React.ReactNode {
         <h1 className="text-2xl font-semibold tracking-tight">
           {isEdit ? 'Edit recipe' : 'New recipe'}
         </h1>
-        <Link to={isEdit ? `/recipes/${slug}` : '/recipes'} className="text-sm text-stone-500 hover:underline">
+        <Link to={isEdit ? `/recipes/${slug}` : '/recipes'} className="text-sm text-[var(--muted)] hover:underline">
           Cancel
         </Link>
       </div>
@@ -269,7 +269,7 @@ export default function RecipeFormPage(): React.ReactNode {
           <Button type="submit" disabled={save.isPending}>
             {save.isPending ? 'Saving…' : isEdit ? 'Save changes' : 'Create recipe'}
           </Button>
-          <Link to={isEdit ? `/recipes/${slug}` : '/recipes'} className="text-sm text-stone-500 hover:underline">
+          <Link to={isEdit ? `/recipes/${slug}` : '/recipes'} className="text-sm text-[var(--muted)] hover:underline">
             Cancel
           </Link>
         </div>

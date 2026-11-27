@@ -81,7 +81,7 @@ export default function ShoppingListPage(): React.ReactNode {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Shopping list</h1>
-        <p className="mt-1 text-sm text-stone-500">
+        <p className="mt-1 text-sm text-[var(--muted)]">
           Pick recipes, adjust servings, then copy the merged list.
         </p>
       </div>
@@ -100,10 +100,10 @@ export default function ShoppingListPage(): React.ReactNode {
           {recipes.isError ? <ErrorBox message="Could not load recipes." /> : null}
 
           {!recipes.isLoading && filtered.length === 0 ? (
-            <p className="text-sm text-stone-500">No recipes to choose from.</p>
+            <p className="text-sm text-[var(--muted)]">No recipes to choose from.</p>
           ) : null}
 
-          <ul className="divide-y divide-stone-100">
+          <ul className="divide-y divide-[var(--line)]">
             {filtered.map((recipe) => {
               const selected = selection.find((entry) => entry.recipeId === recipe.id)
               return (
@@ -111,20 +111,20 @@ export default function ShoppingListPage(): React.ReactNode {
                   <label className="flex flex-1 items-center gap-3">
                     <input
                       type="checkbox"
-                      className="h-4 w-4 rounded border-stone-300 text-emerald-700"
+                      className="check"
                       checked={Boolean(selected)}
                       onChange={() => toggle(recipe.id, recipe.servings)}
                     />
                     <span>
-                      <span className="block text-sm font-medium text-stone-800">{recipe.title}</span>
-                      <span className="block text-xs text-stone-500">
+                      <span className="block text-sm font-medium text-[var(--text)]">{recipe.title}</span>
+                      <span className="block text-xs text-[var(--muted)]">
                         {recipe.servings ? `${recipe.servings} servings` : 'No yield'}
                         {recipe.totalMinutes !== null ? ` · ${formatMinutes(recipe.totalMinutes)}` : ''}
                       </span>
                     </span>
                   </label>
                   {selected ? (
-                    <label className="flex items-center gap-2 text-xs text-stone-600">
+                    <label className="flex items-center gap-2 text-xs text-[var(--muted)]">
                       Servings
                       <Select
                         aria-label={`Servings for ${recipe.title}`}
@@ -166,7 +166,7 @@ export default function ShoppingListPage(): React.ReactNode {
 
           {shopping.isError ? <ErrorBox message="Could not build the list." /> : null}
           {shopping.isFetching && selection.length > 0 ? (
-            <p className="text-sm text-stone-500">Building…</p>
+            <p className="text-sm text-[var(--muted)]">Building…</p>
           ) : null}
 
           {shopping.data ? (
@@ -175,7 +175,7 @@ export default function ShoppingListPage(): React.ReactNode {
               readOnly
               value={shopping.data.text}
               rows={Math.max(8, shopping.data.lines.length + 2)}
-              className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 font-mono text-sm text-stone-800"
+              className="well mono w-full px-3 py-2 text-sm leading-relaxed text-[var(--text)]"
             />
           ) : null}
         </Card>
