@@ -1,0 +1,14 @@
+$ npx playwright test
+[WebServer] Seed complete
+[WebServer]   admin:  admin / admin-password-123
+[WebServer]   member: friend / member-password-1
+[WebServer]   data:   /home/mattias/hobby/herrku/.e2e-data
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (616ms)
+  ✓  2 [chromium] › e2e/app.spec.ts:50:1 › admin invites a new member who can sign in and read the shared library (495ms)
+  ✓  3 [chromium] › e2e/app.spec.ts:84:1 › falls back to manual copy when the clipboard api is unavailable (295ms)
+
+  3 passed (2.6s)
+EXIT=0

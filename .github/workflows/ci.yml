@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci --include=dev
+
+      - name: Rebuild native modules
+        run: npm rebuild better-sqlite3 sharp esbuild
+
+      - name: Build
+        run: npm run build
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit and route tests
+        run: npm test
+        env:
+          NODE_ENV: test
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: End to end
+        run: npm run test:e2e
+
+      - name: Build image
+        run: docker build -t herrku:ci .
+
+      - name: Boot image and check health
+        run: |
+          docker run -d --name herrku-ci \
+            -p 3111:3000 \
+            -e PUBLIC_URL=http://localhost:3111 \
+            -e COOKIE_SECURE=false \
+            -e ADMIN_USERNAME=admin \
+            -e ADMIN_PASSWORD=admin-password-123 \
+            herrku:ci
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://localhost:3111/api/health; then break; fi
+            sleep 1
+          done
+          curl -fsS http://localhost:3111/api/health
+          docker rm -f herrku-ci
