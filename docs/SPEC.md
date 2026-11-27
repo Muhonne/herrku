@@ -737,6 +737,7 @@ Clarifications added on the readiness review (same date):
 - `npm run seed` is a local tool: it refuses `--e2e` under `NODE_ENV=production` and otherwise forces development mode.
 - Personal API tokens (`migrations/0002_api_tokens.sql`) were added after v1: bearer resolution runs before the CSRF check, expiry and disabled-user state are checked per request, and the rate-limit key is a hash of the `Authorization` header.
 - `mcp/` is a separate stdio process, not part of the server image. It authenticates with a personal token from `HERRKU_URL`/`HERRKU_TOKEN` and exposes six thin tools against the same REST API; `npm run smoke:mcp` exercises it end to end.
+- better-sqlite3 13 has no prebuilt binary, so the image compiles it in the builder stage (Python/make/g++) and copies the pruned `node_modules` into a toolchain-free runtime stage.
 
 ## 18. Deferred (not open, just later)
 
