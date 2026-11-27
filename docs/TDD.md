@@ -1,6 +1,6 @@
 # TDD audit
 
-Generated 2026-11-27T15:25:17.287Z on Node v26.13.0.
+Generated 2026-11-27T17:11:15.980Z on Node v26.13.0.
 
 ## Method
 
@@ -29,7 +29,8 @@ machine-readable result is `docs/tdd-audit.json`.
 | 06-m3-image-permissions | M3: only the creator or admin may upload an image | Remove the upload permission check | 1 — × image upload > forbids a non-owner member from uploading | 0 | pass |
 | 07-m4-scaling | M4: shopping list scales by requested servings | Ignore the servings multiplier | 1 — × POST /api/shopping-list > merges, scales and renders a plain-text list | 0 | pass |
 | 08-m5-last-admin | M5: the last active admin cannot be removed | Disable the last-admin guard | 1 — × disabled accounts > refuses to disable the last admin | 0 | pass |
-| 09-ui-clipboard | UI: the copy button actually writes to the clipboard | Report success without writing to the clipboard | 1 — ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (590ms) | 0 | pass |
+| 09-api-tokens | Personal API tokens: expiry is enforced | Accept expired bearer tokens | 1 — × api tokens > rejects unknown, revoked and expired tokens | 0 | pass |
+| 10-ui-clipboard | UI: the copy button actually writes to the clipboard | Report success without writing to the clipboard | 1 — ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (799ms) | 0 | pass |
 
 ## Detail
 
@@ -106,9 +107,16 @@ Red: exit 1; failing tests:
 - FAIL  server/test/auth.test.ts > disabled accounts > refuses to disable the last admin
 Restored: exit 0
 Logs: `docs/tdd-logs/08-m5-last-admin.red.log`, `docs/tdd-logs/08-m5-last-admin.green.log`
-### 09-ui-clipboard — UI: the copy button actually writes to the clipboard
+### 09-api-tokens — Personal API tokens: expiry is enforced
+Mutation: Accept expired bearer tokens
+Red: exit 1; failing tests:
+- × api tokens > rejects unknown, revoked and expired tokens
+- FAIL  server/test/tokens.test.ts > api tokens > rejects unknown, revoked and expired tokens
+Restored: exit 0
+Logs: `docs/tdd-logs/09-api-tokens.red.log`, `docs/tdd-logs/09-api-tokens.green.log`
+### 10-ui-clipboard — UI: the copy button actually writes to the clipboard
 Mutation: Report success without writing to the clipboard
 Red: exit 1; failing tests:
-- ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (590ms)
+- ✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (799ms)
 Restored: exit 0
-Logs: `docs/tdd-logs/09-ui-clipboard.red.log`, `docs/tdd-logs/09-ui-clipboard.green.log`
+Logs: `docs/tdd-logs/10-ui-clipboard.red.log`, `docs/tdd-logs/10-ui-clipboard.green.log`

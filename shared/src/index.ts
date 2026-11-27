@@ -16,6 +16,7 @@ export type { SearchTextInput } from './search-text.js'
 
 export {
   acceptInviteSchema,
+  apiTokenCreateSchema,
   displayNameSchema,
   ingredientInputSchema,
   inviteCreateSchema,

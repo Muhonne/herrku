@@ -148,6 +148,18 @@ export const shoppingListSchema = z.object({
     .max(100),
 })
 
+export const apiTokenCreateSchema = z.object({
+  name: z.string().trim().min(1).max(80),
+  expiresInDays: z
+    .number()
+    .int()
+    .min(1)
+    .max(3650)
+    .nullable()
+    .optional()
+    .transform((value) => value ?? null),
+})
+
 export type LoginInput = z.infer<typeof loginSchema>
 export type RecipeInput = z.infer<typeof recipeInputSchema>
 export type IngredientInput = z.infer<typeof ingredientInputSchema>

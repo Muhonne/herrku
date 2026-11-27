@@ -112,7 +112,17 @@ const phases = [
     test: { cmd: 'npx', args: ['vitest', 'run', 'server/test/auth.test.ts'] },
   },
   {
-    id: '09-ui-clipboard',
+    id: '09-api-tokens',
+    title: 'Personal API tokens: expiry is enforced',
+    kind: 'mutate',
+    file: 'server/src/app.ts',
+    find: '(row.expires_at !== null && Date.parse(row.expires_at) <= Date.now())',
+    replace: 'false',
+    mutation: 'Accept expired bearer tokens',
+    test: { cmd: 'npx', args: ['vitest', 'run', 'server/test/tokens.test.ts'] },
+  },
+  {
+    id: '10-ui-clipboard',
     title: 'UI: the copy button actually writes to the clipboard',
     kind: 'mutate',
     file: 'web/src/lib/clipboard.ts',

@@ -80,6 +80,17 @@ export interface RecipeTagsTable {
   tag: string
 }
 
+export interface ApiTokensTable {
+  id: Generated<number>
+  user_id: number
+  name: string
+  token_hash: string
+  prefix: string
+  created_at: string
+  last_used_at: string | null
+  expires_at: string | null
+}
+
 export interface Database {
   users: UsersTable
   sessions: SessionsTable
@@ -88,4 +99,5 @@ export interface Database {
   ingredients: IngredientsTable
   steps: StepsTable
   recipe_tags: RecipeTagsTable
+  api_tokens: ApiTokensTable
 }

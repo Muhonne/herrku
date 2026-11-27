@@ -20,12 +20,26 @@ If npm blocks native install scripts on your machine, run `npm rebuild better-sq
 ## Tests
 
 ```bash
-npm test            # 227 unit + route tests (Vitest)
+npm test            # 238 unit + route tests (Vitest)
 npm run typecheck
 npm run lint
 npm run test:e2e    # builds, seeds .e2e-data, runs Playwright on :3111
 npm run audit:tdd   # red->green mutation audit; writes docs/TDD.md and docs/tdd-logs/
 ```
+
+## API tokens for scripts and AI tools
+
+Create a token at **/account → API tokens** (shown once), then call the API directly:
+
+```bash
+curl -H "Authorization: Bearer hk_..." https://recipes.example/api/recipes?q=soup
+
+curl -X POST -H "Authorization: Bearer hk_..." -H 'content-type: application/json' \
+  -d '{"title":"Weeknight Pasta","ingredients":[{"rawText":"2 cups flour"}],"steps":[{"text":"Cook."}]}' \
+  https://recipes.example/api/recipes
+```
+
+Bearer requests need no cookies and no `Origin` header, which is what makes them usable from CLIs, agents, and MCP servers. A token inherits its owner's role; revoke it from the same page.
 
 ## Production
 

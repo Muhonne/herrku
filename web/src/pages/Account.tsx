@@ -1,15 +1,30 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { ApiError, formatDate, request, useSessions, type SessionInfo } from '../api'
-import { Button, Card, ErrorBox, Field, Input, useToast } from '../components/ui'
+import {
+  ApiError,
+  formatDate,
+  request,
+  useSessions,
+  useTokens,
+  type ApiTokenCreated,
+  type SessionInfo,
+} from '../api'
+import { copyText } from '../lib/clipboard'
+import { Button, Card, ConfirmButton, ErrorBox, Field, Input, Select, useToast } from '../components/ui'
+
+type TokenExpiry = 'never' | '30' | '90' | '365'
 
 export default function AccountPage(): React.ReactNode {
   const sessions = useSessions()
+  const tokens = useTokens()
   const queryClient = useQueryClient()
   const toast = useToast()
 
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
+  const [tokenName, setTokenName] = useState('')
+  const [tokenExpiry, setTokenExpiry] = useState<TokenExpiry>('never')
+  const [newSecret, setNewSecret] = useState<string | null>(null)
 
   const changePassword = useMutation({
     mutationFn: () =>
@@ -37,8 +52,38 @@ export default function AccountPage(): React.ReactNode {
     },
   })
 
+  const createToken = useMutation({
+    mutationFn: () =>
+      request<ApiTokenCreated>('POST', '/api/tokens', {
+        name: tokenName.trim(),
+        expiresInDays: tokenExpiry === 'never' ? null : Number(tokenExpiry),
+      }),
+    onSuccess: async (data) => {
+      setNewSecret(data.secret)
+      setTokenName('')
+      await queryClient.invalidateQueries({ queryKey: ['tokens'] })
+    },
+  })
+
+  const revokeToken = useMutation({
+    mutationFn: (id: number) => request<void>('DELETE', `/api/tokens/${id}`),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['tokens'] })
+    },
+  })
+
   const passwordError =
     changePassword.error instanceof ApiError ? changePassword.error.message : null
+  const tokenError =
+    createToken.error instanceof ApiError
+      ? createToken.error.message
+      : createToken.error
+        ? 'Could not create the token.'
+        : revokeToken.error instanceof ApiError
+          ? revokeToken.error.message
+          : revokeToken.error
+            ? 'Could not revoke the token.'
+            : null
 
   const describe = (session: SessionInfo): string => {
     const agent = session.userAgent ?? 'Unknown device'
@@ -126,6 +171,118 @@ export default function AccountPage(): React.ReactNode {
               >
                 Revoke
               </Button>
+            </li>
+          ))}
+        </ul>
+      </Card>
+
+      <Card className="space-y-4">
+        <div>
+          <h2 className="text-lg font-semibold">API tokens</h2>
+          <p className="mt-1 text-sm text-stone-600">
+            For scripts and AI tools. Send{' '}
+            <code className="rounded bg-stone-100 px-1 py-0.5 text-xs">
+              Authorization: Bearer &lt;token&gt;
+            </code>{' '}
+            instead of a session cookie. Tokens inherit your role.
+          </p>
+        </div>
+
+        {newSecret ? (
+          <div className="space-y-2 rounded-lg border border-emerald-300 bg-emerald-50/60 p-3">
+            <p className="text-sm font-medium text-emerald-900">
+              Copy this token now — it is shown only once.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Input
+                readOnly
+                aria-label="New API token"
+                value={newSecret}
+                className="flex-1 font-mono text-xs"
+              />
+              <Button
+                type="button"
+                onClick={async () => {
+                  const ok = await copyText(newSecret)
+                  toast(ok ? 'Token copied' : 'Copy failed — select the token and copy it manually')
+                }}
+              >
+                Copy
+              </Button>
+              <Button type="button" variant="ghost" onClick={() => setNewSecret(null)}>
+                Dismiss
+              </Button>
+            </div>
+          </div>
+        ) : null}
+
+        {tokenError ? <ErrorBox message={tokenError} /> : null}
+
+        <form
+          className="flex flex-wrap items-end gap-2"
+          onSubmit={(event) => {
+            event.preventDefault()
+            createToken.mutate()
+          }}
+        >
+          <div className="min-w-48 flex-1">
+            <Field label="Token name">
+              <Input
+                aria-label="Token name"
+                required
+                maxLength={80}
+                placeholder="laptop-cli"
+                value={tokenName}
+                onChange={(event) => setTokenName(event.target.value)}
+              />
+            </Field>
+          </div>
+          <div>
+            <Field label="Expires">
+              <Select
+                aria-label="Token expiry"
+                value={tokenExpiry}
+                onChange={(event) => setTokenExpiry(event.target.value as TokenExpiry)}
+              >
+                <option value="never">Never</option>
+                <option value="30">30 days</option>
+                <option value="90">90 days</option>
+                <option value="365">1 year</option>
+              </Select>
+            </Field>
+          </div>
+          <Button type="submit" disabled={createToken.isPending || tokenName.trim() === ''}>
+            {createToken.isPending ? 'Creating…' : 'Create token'}
+          </Button>
+        </form>
+
+        {tokens.isLoading ? <p className="text-sm text-stone-500">Loading…</p> : null}
+        {tokens.isError ? <ErrorBox message="Could not load API tokens." /> : null}
+        {tokens.data && tokens.data.tokens.length === 0 ? (
+          <p className="text-sm text-stone-500">No API tokens yet.</p>
+        ) : null}
+
+        <ul className="divide-y divide-stone-100">
+          {tokens.data?.tokens.map((token) => (
+            <li key={token.id} className="flex flex-wrap items-center gap-3 py-3">
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-stone-800">
+                  {token.name}
+                  <span className="ml-2 font-mono text-xs text-stone-500">{token.prefix}…</span>
+                </p>
+                <p className="text-xs text-stone-500">
+                  Created {formatDate(token.createdAt)} ·{' '}
+                  {token.lastUsedAt ? `last used ${formatDate(token.lastUsedAt)}` : 'never used'} ·{' '}
+                  {token.expiresAt ? `expires ${formatDate(token.expiresAt)}` : 'no expiry'}
+                </p>
+              </div>
+              <ConfirmButton
+                confirmLabel="Revoke"
+                onConfirm={() => revokeToken.mutate(token.id)}
+                disabled={revokeToken.isPending}
+              >
+                Revoke
+              </ConfirmButton>
             </li>
           ))}
         </ul>

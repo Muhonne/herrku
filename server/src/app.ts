@@ -33,6 +33,7 @@ import { imageRoutes } from './routes/images.js'
 import { recipeRoutes } from './routes/recipes.js'
 import { shoppingRoutes } from './routes/shopping.js'
 import { tagRoutes } from './routes/tags.js'
+import { tokenRoutes } from './routes/tokens.js'
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -51,6 +52,17 @@ interface SessionRow {
   expires_at: string
   last_seen_at: string
   persistent: number
+  id: number
+  username: string
+  display_name: string | null
+  role: 'admin' | 'member'
+  disabled_at: string | null
+}
+
+interface ApiTokenRow {
+  token_id: number
+  last_used_at: string | null
+  expires_at: string | null
   id: number
   username: string
   display_name: string | null
@@ -118,7 +130,10 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
       global: true,
       max: config.rateLimit.globalMax,
       timeWindow: config.rateLimit.globalWindowMs,
-      keyGenerator: (request) => request.ip,
+      keyGenerator: (request) => {
+        const authorization = request.headers.authorization
+        return typeof authorization === 'string' ? sha256(authorization) : request.ip
+      },
       errorResponseBuilder: (_request, context) => ({
         error: {
           code: 'rate_limited',
@@ -135,11 +150,11 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
       root: webRoot,
       prefix: '/',
       wildcard: false,
-      setHeaders: (response, filePath) => {
+      setHeaders: (reply, filePath) => {
         if (filePath.endsWith('index.html')) {
-          response.setHeader('Cache-Control', 'no-cache')
+          reply.header('Cache-Control', 'no-cache')
         } else if (filePath.includes('/assets/')) {
-          response.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+          reply.header('Cache-Control', 'public, max-age=31536000, immutable')
         }
       },
     })
@@ -222,8 +237,42 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
     'update sessions set last_seen_at = ?, expires_at = ? where id = ?',
   )
   const sessionDelete = sqlite.prepare('delete from sessions where id = ?')
+  const apiTokenLookup = sqlite.prepare(
+    `select t.id as token_id, t.last_used_at, t.expires_at,
+            u.id, u.username, u.display_name, u.role, u.disabled_at
+       from api_tokens t join users u on u.id = t.user_id
+      where t.token_hash = ?`,
+  )
+  const apiTokenTouch = sqlite.prepare('update api_tokens set last_used_at = ? where id = ?')
 
   app.addHook('onRequest', async (request, reply) => {
+    const authorization = request.headers.authorization
+    if (typeof authorization === 'string' && authorization.startsWith('Bearer ')) {
+      const secret = authorization.slice('Bearer '.length).trim()
+      const row = apiTokenLookup.get(sha256(secret)) as ApiTokenRow | undefined
+
+      if (
+        !row ||
+        row.disabled_at !== null ||
+        (row.expires_at !== null && Date.parse(row.expires_at) <= Date.now())
+      ) {
+        throw new HttpError(401, 'unauthorized', 'Invalid or expired API token')
+      }
+
+      request.user = {
+        id: row.id,
+        username: row.username,
+        displayName: row.display_name ?? row.username,
+        role: row.role,
+      }
+      request.sessionId = null
+
+      if (row.last_used_at === null || Date.now() - Date.parse(row.last_used_at) >= HOUR_MS) {
+        apiTokenTouch.run(new Date().toISOString(), row.token_id)
+      }
+      return
+    }
+
     if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method) && request.url.startsWith('/api')) {
       const origin = requestOrigin(request)
       if (!origin || !config.allowedOrigins.includes(origin)) {
@@ -276,6 +325,7 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
   await app.register(imageRoutes)
   await app.register(tagRoutes)
   await app.register(shoppingRoutes)
+  await app.register(tokenRoutes)
 
   await seedAdmin(app)
   cleanupOrphanImages(app)

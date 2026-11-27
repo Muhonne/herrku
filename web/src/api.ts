@@ -99,6 +99,20 @@ export interface SessionInfo {
   current: boolean
 }
 
+export interface ApiToken {
+  id: number
+  name: string
+  prefix: string
+  createdAt: string
+  lastUsedAt: string | null
+  expiresAt: string | null
+}
+
+export interface ApiTokenCreated {
+  secret: string
+  token: ApiToken
+}
+
 export interface AdminUser {
   id: number
   username: string
@@ -273,6 +287,13 @@ export function useSessions() {
   return useQuery({
     queryKey: ['sessions'],
     queryFn: () => request<{ sessions: SessionInfo[] }>('GET', '/api/sessions'),
+  })
+}
+
+export function useTokens() {
+  return useQuery({
+    queryKey: ['tokens'],
+    queryFn: () => request<{ tokens: ApiToken[] }>('GET', '/api/tokens'),
   })
 }
 

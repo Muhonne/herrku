@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T15:25:17.287Z",
+  "generatedAt": "2026-11-27T17:11:15.980Z",
   "node": "v26.13.0",
   "results": [
     {
@@ -193,7 +193,27 @@
       "error": null
     },
     {
-      "id": "09-ui-clipboard",
+      "id": "09-api-tokens",
+      "title": "Personal API tokens: expiry is enforced",
+      "mutation": "Accept expired bearer tokens",
+      "file": "server/src/app.ts",
+      "red": {
+        "exit": 1,
+        "timedOut": false,
+        "failedTests": [
+          "× api tokens > rejects unknown, revoked and expired tokens",
+          "FAIL  server/test/tokens.test.ts > api tokens > rejects unknown, revoked and expired tokens"
+        ]
+      },
+      "green": {
+        "exit": 0,
+        "failedTests": []
+      },
+      "ok": true,
+      "error": null
+    },
+    {
+      "id": "10-ui-clipboard",
       "title": "UI: the copy button actually writes to the clipboard",
       "mutation": "Report success without writing to the clipboard",
       "file": "web/src/lib/clipboard.ts",
@@ -201,7 +221,7 @@
         "exit": 1,
         "timedOut": false,
         "failedTests": [
-          "✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (590ms)"
+          "✘  1 [chromium] › e2e/app.spec.ts:11:1 › creates a recipe, finds it by search, and copies a shopping list (799ms)"
         ]
       },
       "green": {

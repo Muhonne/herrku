@@ -22,6 +22,7 @@ Status: **agreed, buildable**. Decisions are final unless superseded by a dated 
 | Visibility | Shared library: all signed-in users read everything; creator or admin edits |
 | Search | Substring on a precomputed `search_text` (title + ingredient names), plus tag filter |
 | Shopping list | Server-side merge by name+unit, servings scaling, plain-text clipboard output |
+| API access | Session cookie for the SPA; personal bearer tokens (`hk_…`) for scripts and AI tools |
 
 ---
 
@@ -148,9 +149,19 @@ No email. An admin issues a **set-password link**: same table, `purpose='reset'`
 - A session whose user is disabled is rejected and deleted.
 - `DELETE /api/sessions` revokes all; `DELETE /api/sessions/:id` revokes one (own sessions only). The list marks the current session.
 
+### Personal API tokens
+
+- Created at `/account` or with `POST /api/tokens`. The secret is `hk_` followed by 43 base64url characters, returned **once**; only its sha256 is stored.
+- Each token records a name, a display prefix (first 11 characters), `created_at`, `last_used_at` (written at most hourly) and an optional `expires_at`.
+- Send `Authorization: Bearer <token>`. The token resolves to its owning user and inherits that user's role, including admin endpoints. There are no scopes in v1.
+- Unknown, expired, or disabled-user tokens return `401 unauthorized`.
+- Bearer requests **skip the cookie CSRF origin check**, because they carry no ambient credentials. Cookie requests still require a matching `Origin`.
+- Revocation is a hard delete (`DELETE /api/tokens/:id`) and takes effect on the next request.
+- Rate limiting keys bearer requests by a hash of the `Authorization` header, so each token gets its own budget.
+
 ### Rate limiting
 
-In-memory (single process). Keyed by client IP; when `TRUST_PROXY=true` the first hop of `X-Forwarded-For` is used.
+In-memory (single process). Keyed by client IP, or by a hash of the `Authorization` header when a bearer token is used; when `TRUST_PROXY=true` the first hop of `X-Forwarded-For` is used.
 
 - Login, invite validation, and accept-invite: 10 requests / 15 min per IP.
 - Everything else: 100 requests / min per IP.
@@ -205,6 +216,18 @@ invites(
   used_at TEXT
 )
 CREATE INDEX invites_expiry_idx ON invites(expires_at);
+
+api_tokens(
+  id INTEGER PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  token_hash TEXT NOT NULL UNIQUE,
+  prefix TEXT NOT NULL,           -- first 11 characters, for display only
+  created_at TEXT NOT NULL,
+  last_used_at TEXT,
+  expires_at TEXT
+)
+CREATE INDEX api_tokens_user_idx ON api_tokens(user_id);
 
 recipes(
   id INTEGER PRIMARY KEY,
@@ -410,6 +433,16 @@ Error envelope, always:
 | DELETE | `/api/sessions/:id` | own session only |
 | DELETE | `/api/sessions` | revoke all own sessions |
 
+Every route also accepts `Authorization: Bearer <token>` in place of the session cookie.
+
+Tokens
+
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/api/tokens` | own tokens: `{id,name,prefix,createdAt,lastUsedAt,expiresAt}` |
+| POST | `/api/tokens` | `{name, expiresInDays?}` → 201 `{secret, token}`; `secret` is shown once |
+| DELETE | `/api/tokens/:id` | own token only; 204; `404` otherwise |
+
 `user` = `{ id, username, displayName, role }`.
 
 ### Recipes
@@ -594,6 +627,7 @@ Internet-reachable by design, so this is v1 scope.
 - Argon2id and dummy-hash timing as specified in §4.
 - Sessions: token only in the cookie, hashed at rest; revoked on password change (others), admin reset (all), disable (all).
 - **CSRF**: `SameSite=Lax` plus an origin check on every non-`GET`/`HEAD` `/api` request. Read `Origin`; if absent, use `Referer`; if neither is present → `403 csrf_failed`. Compare normalized `scheme://host[:port]` against `ALLOWED_ORIGINS` (comma-split of `PUBLIC_URL` by default). This applies to multipart uploads too.
+- **Bearer tokens** bypass the CSRF check by design; they must still be valid, unexpired, and owned by an enabled user. Tokens are hashed at rest, shown once, and revocable.
 - Rate limits per §4, returning `Retry-After`.
 - `@fastify/helmet` in production: `contentSecurityPolicy` with `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`, plus `X-Content-Type-Options: nosniff`, `Referrer-Policy: same-origin`, `Cross-Origin-Opener-Policy: same-origin`. CSP is disabled in development because Vite requires inline bootstrap code.
 - No inline `<style>` elements or `style=` attributes in the SPA (use Tailwind classes) so the CSP holds.
@@ -700,6 +734,7 @@ Clarifications added on the readiness review (same date):
 - `npm run test:e2e` builds first; the E2E webServer seeds a disposable `.e2e-data` directory and serves on port 3111.
 - Node 24 is the image base; development was verified on Node 26.
 - `npm run seed` is a local tool: it refuses `--e2e` under `NODE_ENV=production` and otherwise forces development mode.
+- Personal API tokens (`migrations/0002_api_tokens.sql`) were added after v1: bearer resolution runs before the CSRF check, expiry and disabled-user state are checked per request, and the rate-limit key is a hash of the `Authorization` header.
 
 ## 18. Deferred (not open, just later)
 

@@ -1,0 +1,45 @@
+
+ RUN  v3.2.7 /home/mattias/hobby/herrku
+
+ ❯ server/test/tokens.test.ts (11 tests | 1 failed) 488ms
+   ✓ api tokens > requires a session or token to manage tokens 115ms
+   ✓ api tokens > issues a token once, stores only its hash, and lists only a prefix 40ms
+   ✓ api tokens > authenticates requests with a bearer token 31ms
+   ✓ api tokens > accepts bearer mutations without an Origin header, while cookies still require CSRF 44ms
+   × api tokens > rejects unknown, revoked and expired tokens 30ms
+     → expected 200 to be 401 // Object.is equality
+   ✓ api tokens > rejects tokens belonging to disabled users 46ms
+   ✓ api tokens > keeps role rules for token-authenticated requests 45ms
+   ✓ api tokens > tracks last use and lets the owner revoke a token 25ms
+   ✓ api tokens > does not allow deleting someone else’s token 49ms
+   ✓ api tokens > validates token names and expiry values 29ms
+   ✓ api tokens > supports the shopping list and recipe search through a token 34ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+   Start at  19:11:00
+   Duration  1.24s (transform 156ms, setup 0ms, collect 433ms, tests 488ms, environment 2ms, prepare 83ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  server/test/tokens.test.ts > api tokens > rejects unknown, revoked and expired tokens
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ server/test/tokens.test.ts:182:36
+    180|       headers: bearer(expiring.secret),
+    181|     })
+    182|     expect(afterExpiry.statusCode).toBe(401)
+       |                                    ^
+    183|   })
+    184| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+

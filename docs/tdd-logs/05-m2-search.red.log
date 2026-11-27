@@ -1,39 +1,39 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/recipes.test.ts (26 tests | 1 failed) 524ms
-   ✓ recipe create > creates a recipe and returns the full document 82ms
-   ✓ recipe create > parses rawText when only a raw line is supplied 19ms
-   ✓ recipe create > suffixes colliding slugs 20ms
-   ✓ recipe create > rejects invalid input with field details 17ms
-   ✓ recipe create > rejects servings out of range 16ms
-   ✓ recipe create > rejects too many tags 15ms
-   ✓ recipe create > rejects quantityMax below quantity 16ms
-   ✓ recipe create > rejects unknown unit 19ms
-   ✓ recipe create > rejects non-http source url 15ms
-   ✓ recipe create > requires a session 10ms
-   ✓ recipe read > returns a recipe by slug 15ms
-   ✓ recipe read > returns 404 for an unknown slug 15ms
-   ✓ recipe read > requires a session to read 9ms
-   ✓ recipe read > lists recipes without nested ingredients and with thumb metadata 15ms
-   ✓ search > matches a finnish title case-insensitively 18ms
-   ✓ search > matches ingredient names 17ms
-   ✓ search > does not treat wildcards in the query as sql wildcards 17ms
-   × search > ignores queries shorter than two characters 21ms
+ ❯ server/test/recipes.test.ts (26 tests | 1 failed) 895ms
+   ✓ recipe create > creates a recipe and returns the full document 126ms
+   ✓ recipe create > parses rawText when only a raw line is supplied 34ms
+   ✓ recipe create > suffixes colliding slugs 39ms
+   ✓ recipe create > rejects invalid input with field details 36ms
+   ✓ recipe create > rejects servings out of range 25ms
+   ✓ recipe create > rejects too many tags 23ms
+   ✓ recipe create > rejects quantityMax below quantity 27ms
+   ✓ recipe create > rejects unknown unit 27ms
+   ✓ recipe create > rejects non-http source url 26ms
+   ✓ recipe create > requires a session 18ms
+   ✓ recipe read > returns a recipe by slug 28ms
+   ✓ recipe read > returns 404 for an unknown slug 25ms
+   ✓ recipe read > requires a session to read 19ms
+   ✓ recipe read > lists recipes without nested ingredients and with thumb metadata 28ms
+   ✓ search > matches a finnish title case-insensitively 33ms
+   ✓ search > matches ingredient names 28ms
+   ✓ search > does not treat wildcards in the query as sql wildcards 26ms
+   × search > ignores queries shorter than two characters 39ms
      → expected 1 to be 4 // Object.is equality
-   ✓ search > filters by tag and ANDs repeated tags 20ms
-   ✓ search > sorts and paginates 17ms
-   ✓ search > clamps pageSize to the maximum 17ms
-   ✓ tags > returns distinct tags with counts, sorted 17ms
-   ✓ recipe update and delete > replaces nested data and keeps the slug stable 18ms
-   ✓ recipe update and delete > lets the creator delete 18ms
-   ✓ recipe update and delete > forbids other members from editing or deleting 29ms
-   ✓ recipe update and delete > lets an admin edit and delete a member recipe 29ms
+   ✓ search > filters by tag and ANDs repeated tags 28ms
+   ✓ search > sorts and paginates 30ms
+   ✓ search > clamps pageSize to the maximum 29ms
+   ✓ tags > returns distinct tags with counts, sorted 43ms
+   ✓ recipe update and delete > replaces nested data and keeps the slug stable 30ms
+   ✓ recipe update and delete > lets the creator delete 27ms
+   ✓ recipe update and delete > forbids other members from editing or deleting 50ms
+   ✓ recipe update and delete > lets an admin edit and delete a member recipe 50ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 25 passed (26)
-   Start at  17:24:59
-   Duration  876ms (transform 74ms, setup 0ms, collect 211ms, tests 524ms, environment 0ms, prepare 31ms)
+   Start at  19:10:45
+   Duration  1.69s (transform 149ms, setup 0ms, collect 385ms, tests 895ms, environment 0ms, prepare 54ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯

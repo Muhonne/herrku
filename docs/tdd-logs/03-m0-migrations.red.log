@@ -1,20 +1,20 @@
 
  RUN  v3.2.7 /home/mattias/hobby/herrku
 
- ❯ server/test/health.test.ts (7 tests | 1 failed) 139ms
-   ✓ health > reports ok when the database answers 68ms
-   ✓ health > is reachable without a session 13ms
-   ✓ migrations > creates every table from scratch 11ms
-   × migrations > is idempotent across boots on the same data dir 12ms
+ ❯ server/test/health.test.ts (7 tests | 1 failed) 227ms
+   ✓ health > reports ok when the database answers 105ms
+   ✓ health > is reachable without a session 19ms
+   ✓ migrations > creates every table from scratch 21ms
+   × migrations > is idempotent across boots on the same data dir 23ms
      → Migration 0001_init.sql failed: table users already exists
-   ✓ routing > returns a JSON 404 envelope for unknown api routes 10ms
-   ✓ routing > sets a strict CSP in production and leaves HSTS to the proxy 10ms
-   ✓ routing > serves the SPA shell for unknown non-api GETs when a build exists 13ms
+   ✓ routing > returns a JSON 404 envelope for unknown api routes 24ms
+   ✓ routing > sets a strict CSP in production and leaves HSTS to the proxy 13ms
+   ✓ routing > serves the SPA shell for unknown non-api GETs when a build exists 19ms
 
  Test Files  1 failed (1)
       Tests  1 failed | 6 passed (7)
-   Start at  17:24:54
-   Duration  484ms (transform 71ms, setup 0ms, collect 203ms, tests 139ms, environment 0ms, prepare 32ms)
+   Start at  19:10:37
+   Duration  985ms (transform 134ms, setup 0ms, collect 379ms, tests 227ms, environment 0ms, prepare 59ms)
 
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
@@ -28,14 +28,14 @@ Error: Migration 0001_init.sql failed: table users already exists
        |             ^
      41|     }
      42| 
- ❯ buildApp server/src/app.ts:73:3
- ❯ server/test/health.test.ts:71:26
+ ❯ buildApp server/src/app.ts:85:3
+ ❯ server/test/health.test.ts:72:26
 
 Caused by: SqliteError: table users already exists
  ❯ Database.exec node_modules/better-sqlite3/lib/methods/wrappers.js:9:14
  ❯ applyMigrations server/src/db/migrate.ts:33:14
- ❯ buildApp server/src/app.ts:73:3
- ❯ server/test/health.test.ts:71:26
+ ❯ buildApp server/src/app.ts:85:3
+ ❯ server/test/health.test.ts:72:26
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 Serialized Error: { code: 'SQLITE_ERROR' }
